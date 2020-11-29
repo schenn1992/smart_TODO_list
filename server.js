@@ -37,9 +37,10 @@ const usersRoutes     = require("./routes/users");
 const widgetsRoutes   = require("./routes/widgets");
 // Other routes
 const registerRoutes  = require("./routes/register");
-const loginRoutes  = require("./routes/login");
-const logoutRoutes  = require("./routes/logout");
+const loginRoutes     = require("./routes/login");
+const logoutRoutes    = require("./routes/logout");
 const categoryRoutes  = require("./routes/category");
+const smartPostRoutes = require("./routes/smartPost");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -51,17 +52,13 @@ app.use("/register", registerRoutes(db));
 app.use("/login", loginRoutes(db));
 app.use("/logout", logoutRoutes(db));
 app.use("/category", categoryRoutes(db));
+app.use("/add", smartPostRoutes(db));
 
 // Home page
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
   res.render("index");
-});
-
-// Post new item
-app.post("/", (req, res) => {
-  res.send("Adding new item OK!");
 });
 
 app.listen(PORT, () => {

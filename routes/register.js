@@ -2,10 +2,12 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  // Gets register page
   router.get("/", (req, res) => {
     res.send("Register Page OK!");
   });
 
+  // Post and Creates new user
   router.post("/", (req, res) => {
     // Can't test yet, need to create register.ejs first
     res.send("Posting to Register Page OK!");

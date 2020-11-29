@@ -9,6 +9,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  // Gets the all users from the db as a JSON
   router.get("/api", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
@@ -37,6 +38,7 @@ module.exports = (db) => {
       })
   });
 
+  // Update user's profile
   router.put("/:id", (req, res) => {
     res.send("Update the user's profile OK!");
   });
