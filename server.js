@@ -59,6 +59,11 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+// Post new item
+app.post("/", (req, res) => {
+  res.send("Adding new item OK!");
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });

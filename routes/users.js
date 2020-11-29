@@ -37,5 +37,9 @@ module.exports = (db) => {
       })
   });
 
+  router.put("/:id", (req, res) => {
+    res.send("Update the user's profile OK!");
+  });
+
   return router;
 };
