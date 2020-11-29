@@ -1,9 +1,13 @@
 const express = require('express');
 const router  = express.Router();
 
-module.exports = () => {
+module.exports = (db) => {
   router.get("/", (req, res) => {
     res.send("Register Page OK!");
+  });
+
+  router.post("/", (req, res) => {
+
   });
 
   return router;

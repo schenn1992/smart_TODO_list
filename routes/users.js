@@ -9,7 +9,7 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
-  router.get("/", (req, res) => {
+  router.get("/api", (req, res) => {
     db.query(`SELECT * FROM users;`)
       .then(data => {
         const users = data.rows;
@@ -22,13 +22,13 @@ module.exports = (db) => {
       });
   });
 
+  // Shows user's profile page
   router.get("/:id", (req, res) => {
     const users = req.params;
-    console.log(users);
     db.query(`SELECT * FROM users WHERE id = ${users.id}`)
       .then(data => {
-        // Need to change this later to show the user's page
-        res.send(`OK. Getting user: ${data.rows[0].name} id: ${data.rows[0].id}`);
+        // Need to make a new route later to show the user's page
+        res.send(`User Page OK! Getting user: ${data.rows[0].username} id: ${data.rows[0].id} email: ${data.rows[0].email}`);
       })
       .catch(err => {
         res
