@@ -1,5 +1,10 @@
-module.exports = function(app) {
-  app.get("/register", (req, res) => {
+const express = require('express');
+const router  = express.Router();
+
+module.exports = () => {
+  router.get("/", (req, res) => {
     res.send("Register Page OK!");
   });
+
+  return router;
 }
