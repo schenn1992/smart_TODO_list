@@ -2,16 +2,17 @@
 
 body {
   background-color: #EEE;
+  direction: flex;
 
   h1 {
     color: #244751;
   }
 }
 
-.main-categories {
+.main-categories h2 {
   font-family: 'Yellowtail', cursive;
 }
 
 .main-categories div {
-  border: 5px black;
+  border: 3px solid black;
 }
