@@ -38,6 +38,7 @@ const widgetsRoutes   = require("./routes/widgets");
 // Other routes
 const registerRoutes  = require("./routes/register");
 const loginRoutes  = require("./routes/login");
+const logoutRoutes  = require("./routes/logout");
 const categoryRoutes  = require("./routes/category");
 
 // Mount all resource routes
@@ -48,6 +49,7 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Need to pass something (db) into the route
 app.use("/register", registerRoutes(db));
 app.use("/login", loginRoutes(db));
+app.use("/logout", logoutRoutes(db));
 app.use("/category", categoryRoutes(db));
 
 // Home page
