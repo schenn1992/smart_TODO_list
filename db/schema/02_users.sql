@@ -5,6 +5,5 @@ CREATE TABLE users (
   username VARCHAR(255) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  gender TEXT NOT NULL,
   avatar_id INTEGER REFERENCES avatars(id) ON DELETE CASCADE
 );
