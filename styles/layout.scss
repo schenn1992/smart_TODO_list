@@ -2,11 +2,18 @@
 
 body {
   background-color: #EEE;
-  direction: flex;
-
   h1 {
     color: #244751;
   }
+}
+.main-categories {
+  border: 5px dashed green;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap
+
 }
 
 .main-categories h2 {
@@ -14,5 +21,10 @@ body {
 }
 
 .main-categories div {
+  width: 300px;
+  padding: 50px;
   border: 3px solid black;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
 }
