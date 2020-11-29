@@ -6,7 +6,7 @@ div.user-inputs {
   justify-content: center;
 
   .form-group {
-
+    width: 30em;
   }
 }
 
@@ -15,7 +15,15 @@ div.buttons {
 
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: center;
+
+  .btn:first-child {
+    margin-right: 5em;
+  }
+
+  .btn:last-child {
+    margin-left: 5em;
+  }
 }
 
 
