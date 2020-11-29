@@ -29,7 +29,8 @@ module.exports = (db) => {
     db.query(`SELECT * FROM users WHERE id = ${users.id}`)
       .then(data => {
         // Need to make a new route later to show the user's page
-        res.send(`User Page OK! Getting user: ${data.rows[0].username} id: ${data.rows[0].id} email: ${data.rows[0].email}`);
+        // res.send(`User Page OK! Getting user: ${data.rows[0].username} id: ${data.rows[0].id} email: ${data.rows[0].email}`);
+        res.render("users");
       })
       .catch(err => {
         res

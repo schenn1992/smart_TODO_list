@@ -1,0 +1,26 @@
+div.user-inputs {
+  margin-top: 2em;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .form-group {
+
+  }
+}
+
+div.buttons {
+  margin-top: 1em;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+
+
+// Desktop view
+@media only screen and (min-width: 1024px) {
+
+}
