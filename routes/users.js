@@ -26,14 +26,16 @@ module.exports = (db) => {
   // Shows user's profile page
   router.get("/:id", (req, res) => {
     const users = req.params;
-    console.log('users-from URL :', users);
 
     db.query(`SELECT * FROM users WHERE id = ${users.id}`)
       .then(data => {
-        const { username, email, password } = data.rows[0];
+        //extract user information from query
+        const { id, username, email, password } = data.rows[0];
         const avatarId = data.rows[0].avatar_id;
 
+        //pass user information to ejs template
         const templateVars = {
+          id,
           username,
           email,
           password,
@@ -50,9 +52,16 @@ module.exports = (db) => {
   });
 
   // Update user's profile
-  router.put("/:id", (req, res) => {
+  router.post("/:id", (req, res) => {
 
-    res.send("Update the user's profile OK!");
+    //extract user id from URL
+    const id = req.params.id;
+    //extract user input
+    const { username, email, password } = req.body;
+
+
+
+    res.redirect(`/users/${id}`);
 
   });
 
