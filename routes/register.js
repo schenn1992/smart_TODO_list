@@ -53,15 +53,16 @@ module.exports = (db) => {
   // Post and Create new user
   router.post("/", (req, res) => {
     const user = req.body;
+    // Checks if the submitted email and password were empty and sends an error
+    if (!user.email || !user.password) {
+      return res.status(400).send("Invalid email or password");
+    }
     // Hash the user's password
     user.password = bcrypt.hashSync(user.password, 12);
     // Generate a random avatar id for the user
     user.avatar_id = Math.floor(Math.random() * Math.floor(9) + 1);
 
-    // Checks if the submitted email and password were empty and sends an error
-    if (!user.email || !user.password) {
-      return res.status(400).send("Invalid email or password");
-    }
+
 
     // Checks if the email is already in the database before registering the new account
     getUserByEmail(user.email)
