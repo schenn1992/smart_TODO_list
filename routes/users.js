@@ -7,6 +7,7 @@
 
 const express = require('express');
 const router  = express.Router();
+const bcrypt = require('bcrypt');
 
 module.exports = (db) => {
   // Gets the all users from the db as a JSON
@@ -67,7 +68,7 @@ module.exports = (db) => {
         email = $2,
         password = $3
       WHERE id = $4`,
-      values = [username, email, hashedPassword, id]
+      values: [username, email, hashedPassword, id]
     };
 
     db
