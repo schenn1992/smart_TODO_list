@@ -35,7 +35,7 @@ module.exports = (db) => {
       `;
     const values = [user.username, user.email, user.password, user.avatar_id];
     return db.query(queryString, values)
-      .then(res => res.rows[0])
+      .then(res => res.rows[0].email)
       .catch(e => res.send(e));
   };
 
@@ -47,10 +47,7 @@ module.exports = (db) => {
       `;
     const values = [email];
     return db.query(queryString, values)
-      .then(res => {
-        console.log(res.rows.length);
-        return res.rows;
-      })
+      .then(res => res.rows[0])
       .catch(e => res.send(e));
   };
 
@@ -61,20 +58,15 @@ module.exports = (db) => {
     user.password = bcrypt.hashSync(user.password, 12);
     // Generate a random avatar id for the user
     user.avatar_id = Math.floor(Math.random() * Math.floor(9) + 1);
-    // console.log("user: ", user);
-    // console.log("user input email: ", user.email);
-    // console.log("user avatar: ", user.avatar_id);
-
     // Checks if the submitted email and password were empty and sends an error
     // if the email is already in use, send an error.
     if (!user.email || !user.password) {
       return res.status(400).send("Invalid email or password");
     }
-    if (getUserEmail(user.email).length > 0) {
-      return res.status(400).send("Email already in use");
-    }
-    // else if (exampleFn()) {
-    //   return res.status(400).send("Email already in use");
+    
+    // Checks if the email is already in the database before registering the new account
+    // else if (getUserEmail(user.email) {
+    //   res.status(400).send("Email already in use");
     // }
 
     // Adds the user to the database

@@ -54,7 +54,6 @@ const smartPostRoutes = require("./routes/smartPost");
 app.use("/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
 // Note: mount other resources here, using the same pattern above
-// Need to pass something (db) into the route
 app.use("/register", registerRoutes(db));
 app.use("/login", loginRoutes(db));
 app.use("/logout", logoutRoutes(db));
