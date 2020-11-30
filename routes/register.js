@@ -5,33 +5,35 @@ const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
 const { addUser, getUserWithEmail } = require('../lib/helpers.js');
 
-// shit to do
-// 2. show avatar icons on register page
-// i. fix up HTML page
-// 5. CSS
+// 1. fix email check
+// 2. CSS
 
 module.exports = (db) => {
+  // Gets the user id from the database
+  const getUserId = (id) => {
+    const queryString = `
+    SELECT * FROM users
+    WHERE id = $1
+    `;
+  const values = [id];
+  return db.query(queryString, values)
+    .then(res => res.rows[0].id)
+    .catch(e => res.send(e));
+  };
+
   // Get register page
   router.get("/", (req, res) => {
-    // cookies shit
-    //console.log(req);
-    // console.log("req.session: ", req.sessionCookies.Cookies);
-    // const userId = req.session["user_id"];
-    // console.log("userId: ", userId);
-    // const templateVars = {
-    //   user_id: users[req.session["user_id"]]
-    // };
-
+    // Set the user id with the id in the database
+    const userId = getUserId(req.session["user_id"]);
     const templateVars = {
-
+      user_id: userId
     };
-
     // renders the page, templateVars when cookies work
-    res.render("register");//, templateVars);
+    res.render("register", templateVars);//, templateVars);
   });
 
   // Add user to database
-  const addUser =  function(user) {
+  const addUser =  (user) => {
     const queryString = `
         INSERT INTO users (username, email, password, avatar_id)
         VALUES ($1, $2, $3, $4)
@@ -44,7 +46,7 @@ module.exports = (db) => {
   };
 
   // Checks if an email is already in the database
-  const getUserEmail = function(email) {
+  const getUserEmail = (email) => {
     const queryString = `
       SELECT * FROM users
       WHERE email = $1
@@ -52,7 +54,8 @@ module.exports = (db) => {
     const values = [email];
     return db.query(queryString, values)
       .then(res => {
-        return res.rows[0];
+        console.log(res.rows[0])
+        res.rows[0].email
       })
       .catch(e => res.send(e));
   };
@@ -68,13 +71,22 @@ module.exports = (db) => {
     // console.log("user input email: ", user.email);
     // console.log("user avatar: ", user.avatar_id);
 
+    // console.log("fn: ", getUserEmail(user.email));
+    const exampleFn = () => {
+      return [][0];
+    }
+
     // Checks if the submitted email and password were empty and sends an error
     // if the email is already in use, send an error.
     if (!user.email || !user.password) {
       return res.status(400).send("Invalid email or password");
-    } else if (getUserEmail(user.email)) {
+    }
+    if (getUserEmail(user.email) === user.email) {
       return res.status(400).send("Email already in use");
     }
+    // else if (exampleFn()) {
+    //   return res.status(400).send("Email already in use");
+    // }
 
     // Adds the user to the database
     addUser(user);
