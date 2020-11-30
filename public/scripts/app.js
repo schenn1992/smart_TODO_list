@@ -1,3 +1,6 @@
+// const { use } = require("bcrypt/lib/promises");
+// const { helpers } = require('../../lib/helpers')
+
 $(() => {
   $.ajax({
     method: "GET",
@@ -20,26 +23,46 @@ $(document).ready(() => {
 
     //extract user id for AJAX call
     const url = event.currentTarget.action;
-    const urlId = url.substring(url.length - 1);
+    const userId = url.substring(url.length - 1);
 
     //extract user input
     const username = $('#username').val();
     const email = $('#email').val();
+    const password = $('#password').val();
 
-    console.log('AJAX POST call');
+    //to be moved to helper file once I figure out how to import/export
+    const verifyNoUserInput = function(input1, input2, input3) {
+      if(!input1 || !input2 || !input3) {
+        return false;
+      }
+      return true;
+    }
 
-    $.ajax({
-      url:`/users/${urlId}`,
-      method: 'POST',
-      data: $('form').serialize()
-    })
-    .then(res => {
-      //display updated values on form after POST
-      $('#username').val(username)
-      $('#email').val(email)
-      return res
-    })
-    .catch(err => console.log(err))
-    .always(() => console.log('AJAX POST successful'))
+    const verifyNoEmailConflicts = function() {};
+
+    if(verifyNoUserInput(username, email, password)) {
+
+      console.log('AJAX POST call');
+
+      $.ajax({
+        url:`/users/${userId}`,
+        method: 'POST',
+        data: $('form').serialize()
+      })
+      .then(res => {
+        //display updated values on form after POST
+        // $('#username').val('')
+        // $('#email').val('')
+        // $('#password').val('')
+
+        location.reload();
+      })
+      .catch(err => console.log(err))
+      .always(() => console.log('AJAX POST successful'))
+    } else {
+      return alert('Fields cannot be empty!');
+    }
+
   });
+
 });
