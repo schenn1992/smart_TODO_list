@@ -1,12 +1,6 @@
 const express = require('express');
 const router  = express.Router();
-const cookieSession = require('cookie-session');
 const bcrypt = require('bcrypt');
-const bodyParser = require('body-parser');
-const { addUser, getUserWithEmail } = require('../lib/helpers.js');
-
-// 1. fix email check
-// 2. CSS
 
 module.exports = (db) => {
   // Gets the user id from the database
@@ -15,10 +9,10 @@ module.exports = (db) => {
     SELECT * FROM users
     WHERE id = $1
     `;
-  const values = [id];
-  return db.query(queryString, values)
-    .then(res => res.rows[0].id)
-    .catch(e => res.send(e));
+    const values = [id];
+    return db.query(queryString, values)
+      .then(res => res.rows[0].id)
+      .catch(e => res.send(e));
   };
 
   // Get register page
@@ -33,7 +27,7 @@ module.exports = (db) => {
   });
 
   // Add user to database
-  const addUser =  (user) => {
+  const addUser = (user) => {
     const queryString = `
         INSERT INTO users (username, email, password, avatar_id)
         VALUES ($1, $2, $3, $4)
@@ -54,8 +48,8 @@ module.exports = (db) => {
     const values = [email];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows[0])
-        res.rows[0].email
+        console.log(res.rows.length);
+        return res.rows;
       })
       .catch(e => res.send(e));
   };
@@ -71,17 +65,12 @@ module.exports = (db) => {
     // console.log("user input email: ", user.email);
     // console.log("user avatar: ", user.avatar_id);
 
-    // console.log("fn: ", getUserEmail(user.email));
-    const exampleFn = () => {
-      return [][0];
-    }
-
     // Checks if the submitted email and password were empty and sends an error
     // if the email is already in use, send an error.
     if (!user.email || !user.password) {
       return res.status(400).send("Invalid email or password");
     }
-    if (getUserEmail(user.email) === user.email) {
+    if (getUserEmail(user.email).length > 0) {
       return res.status(400).send("Email already in use");
     }
     // else if (exampleFn()) {
