@@ -17,13 +17,12 @@ module.exports = (db) => {
 
   // Get register page
   router.get("/", (req, res) => {
-    // Set the user id with the id in the database
-    // const userId = getUserId(req.session["user_id"]);
-    // const templateVars = {
-    //   user_id: userId
-    // };
-
-    return res.render("register");//, templateVars);
+   // Set the user id with the id in the database
+    const userId = getUserId(req.session["user_id"]);
+    const templateVars = {
+      user_id: userId
+    };
+    return res.render("register", templateVars);
   });
 
   // Checks if an email is already in the database
@@ -44,7 +43,7 @@ module.exports = (db) => {
     INSERT INTO users (username, email, password, avatar_id)
     VALUES ($1, $2, $3, $4)
     RETURNING *
-  `
+  `;
     const values = [user.username, user.email, user.password, user.avatar_id];
     return db.query(queryString, values)
       .then(res => res.rows[0])
