@@ -26,11 +26,22 @@ module.exports = (db) => {
   // Shows user's profile page
   router.get("/:id", (req, res) => {
     const users = req.params;
+    console.log('users-from URL :', users);
+
     db.query(`SELECT * FROM users WHERE id = ${users.id}`)
       .then(data => {
+      console.log('data-from query :', data.rows[0]);
+
+        const templateVars = {
+          username: data.rows[0].username,
+          email: data.rows[0].email,
+          password: data.rows[0].password,
+          avatarId: data.rows[0].avatar_id
+        }
+
         // Need to make a new route later to show the user's page
         // res.send(`User Page OK! Getting user: ${data.rows[0].username} id: ${data.rows[0].id} email: ${data.rows[0].email}`);
-        res.render("users");
+        res.render("users", templateVars);
       })
       .catch(err => {
         res
