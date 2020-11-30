@@ -63,28 +63,24 @@ module.exports = (db) => {
     if (!user.email || !user.password) {
       return res.status(400).send("Invalid email or password");
     }
-     // Checks if the email is already in the database before registering the new account
-    // if (getUserByEmail(user.email)) {
-    //   return res.status(400).send("Email already in use");
-    // }
 
     // Checks if the email is already in the database before registering the new account
     getUserByEmail(user.email)
       .then(email => {
         if (email) {
           return res.status(400).send("Email already in use");
+        } else {
+          // Adds the user to the database
+          addUser(user)
+            .then(user => {
+              // Sets cookie to the user's id
+              req.session.userId = user.id;
+              // Redirect to user's todo list after registering
+              return res.redirect("/");
+            })
+            .catch(e => res.send(e));
         }
       });
-
-    // Adds the user to the database
-    addUser(user)
-      .then(user => {
-        // Sets cookie to the user's id
-        req.session.userId = user.id;
-        // Redirect to user's todo list after registering
-        return res.redirect("/");
-      })
-      .catch(e => res.send(e));
   });
 
   return router;
