@@ -58,8 +58,22 @@ module.exports = (db) => {
     const id = req.params.id;
     //extract user input
     const { username, email, password } = req.body;
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
+    //update user in the database
+    const query = {
+      text: `UPDATE users
+      SET username = $1,
+        email = $2,
+        password = $3
+      WHERE id = $4`,
+      values = [username, email, hashedPassword, id]
+    };
 
+    db
+      .query(query)
+      .then(result => result.rows[0])
+      .catch(err => console.error('query error', err.stack));
 
     res.redirect(`/users/${id}`);
 
