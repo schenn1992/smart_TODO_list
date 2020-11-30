@@ -63,7 +63,7 @@ module.exports = (db) => {
     // Hash the user's password
     user.password = bcrypt.hashSync(user.password, 12);
     // Generate a random avatar id for the user
-    user.avatar_id = Math.floor(Math.random() * Math.floor(10) + 1);
+    user.avatar_id = Math.floor(Math.random() * Math.floor(9) + 1);
     // console.log("user: ", user);
     // console.log("user input email: ", user.email);
     // console.log("user avatar: ", user.avatar_id);
