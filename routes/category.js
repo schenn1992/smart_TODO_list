@@ -97,21 +97,21 @@ module.exports = (db) => {
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
 
-    // // Testing select all items for a user
-    // selectUserItems(userId)
-    //   .then(res => {
-    //     console.log(res);
-    //     // res.forEach(element => userList.push(element))
-    //     // console.log("userlist: ", userList);
-    //   })
-    //   .catch(e => res.send(e));
+    //sends all query results to the browser at the same time
+    Promise.all([selectUserMovies(userId), selectUserRestaurants(userId), selectUserBooks(userId), selectUserProducts(userId)])
+    .then(result => {
+
+      //result is an array of arrays
+      res.send(result);
+    })
+    .catch(e => res.send(e));
 
     //sends results to the browser(accessed in helpers.js)
-    selectUserMovies(userId)
-      .then(result => {
-        res.send(result);
-      })
-      .catch(e => res.send(e));
+    // selectUserMovies(userId)
+    //   .then(result => {
+    //     res.send(result);
+    //   })
+    //   .catch(e => res.send(e));
 
     // // Testing select all restaurants for a user
     // selectUserRestaurants(userId)

@@ -16,9 +16,9 @@ $(() => {
 $(document).ready(() => {
 
   loadCategory('.category-movies');
-  // loadCategory('.category-restaurants');
-  // loadCategory('.category-books');
-  // loadCategory('.category-products');
+  loadCategory('.category-restaurants');
+  loadCategory('.category-books');
+  loadCategory('.category-products');
 
 });
 

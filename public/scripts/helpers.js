@@ -1,22 +1,23 @@
-
+//takes in query result from route and category
+//builds content to display within specific category
 const createCategoryDisplay = function(queryResult, category) {
   const item = $('<article class="item">');
 
   switch(category) {
     case '.category-movies':
       for(const object of queryResult) {
-        const title = $('<h2>').text(`${object.title}`);
-        const rating = $('<h3>').text(`${object.rating}`);
-        const synopsis = $('<p>').text(`${object.synopsis}`);
+        const title = $('<h3>').text(`${object.title}`);
+        const rating = $('<h5>').text(`Rating: ${object.rating}`);
+        const synopsis = $('<h6>').text(`${object.synopsis}`);
 
         item.append(title);
         item.append(rating);
         item.append(synopsis);
       }
       break;
-    // case '.category-restaurants':
-    //   //const content = queryResult.title;
-    //   break;
+    case '.category-restaurants':
+      //const content = queryResult.title;
+      break;
     // case '.category-books':
     //   //do const content = queryResult.title;
     //   break;
@@ -27,8 +28,6 @@ const createCategoryDisplay = function(queryResult, category) {
     //   // const content = 'abc';
     //   break;
   }
-
-  // const title = $('<article class="item">').text(`${queryResult[0].title}`);
   return item;
 }
 
@@ -39,7 +38,13 @@ const loadCategory = function(category) {
   //makes a request to the /category route, gets back an array of objects
   $
     .ajax('/category', {method: 'GET'})
-    .then(res => $(`${category}`).append(createCategoryDisplay(res, `${category}`)))
+    .then(res => {
+      const [movies, restaurants, books, products] = res;
+      $('.category-movies').append(createCategoryDisplay(movies, '.category-movies'))
+      $('.category-restaurants').append(createCategoryDisplay(restaurants, '.category-restaurants'))
+      $('.category-books').append(createCategoryDisplay(restaurants, '.category-books'))
+      $('.category-products').append(createCategoryDisplay(restaurants, '.category-products'))
+    })
     // .then(res => $('.category-movies').append(createCategoryDisplay(res)))
     // .then(res => console.log(res))
     .catch(err => console.log(err))
