@@ -62,8 +62,6 @@ module.exports = (db) => {
     // Generate a random avatar id for the user
     user.avatar_id = Math.floor(Math.random() * Math.floor(9) + 1);
 
-
-
     // Checks if the email is already in the database before registering the new account
     getUserByEmail(user.email)
       .then(email => {
