@@ -8,6 +8,7 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+const alert = require('../lib/helpers')
 
 module.exports = (db) => {
   // Gets the all users from the db as a JSON
