@@ -5,7 +5,8 @@ module.exports = (db) => {
   // need to check if this works once users can login
   router.post("/", (req, res) => {
     req.session.userId = null;
-    res.send({});
+    // will change the redirect to /login after merge
+    res.redirect("/");
   });
 
   return router
