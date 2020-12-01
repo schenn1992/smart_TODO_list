@@ -31,14 +31,13 @@ $(document).ready(() => {
     const password = $('#password').val();
 
     //to be moved to helper file once I figure out how to import/export
+    //checks that all fields have input, so there are no NULL values sent to db
     const verifyNoUserInput = function(input1, input2, input3) {
       if(!input1 || !input2 || !input3) {
         return false;
       }
       return true;
     }
-
-    const verifyNoEmailConflicts = function() {};
 
     if(verifyNoUserInput(username, email, password)) {
 

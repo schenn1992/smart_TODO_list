@@ -52,51 +52,69 @@ module.exports = (db) => {
       })
   });
 
+  // Checks if an email is already in the database
+  const getUserById = (id) => {
+    const queryString = `
+      SELECT * FROM users
+      WHERE id = $1
+      `;
+    const values = [id];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(e));
+  };
+
+  const updateUser = (user) => {
+    const queryString = `
+      UPDATE users
+      SET username = $1,
+      email = $2,
+      password = $3
+      WHERE id = $4
+      RETURNING *
+      `;
+    const values = [user.username, user.email, user.password, user.id];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(e));
+  };
+
+
+
   // Update user's profile
   router.post("/:id", (req, res) => {
 
     //extract user id from URL
     const id = req.params.id;
+
     //extract user input
     const { username, email, password } = req.body;
+    console.log('password :', password);
+    console.log('email :', email);
+    console.log('username :', username);
     const hashedPassword = bcrypt.hashSync(password, 10);
+    console.log('hashedPassword :', hashedPassword);
 
-    // //to be moved to helper file once I figure out how to import/export
-    // //gets email from db
-    // const getExistingEmail = function(id) {
-    // return  db.query(`SELECT email FROM users WHERE id = ${id}`)
-    //   .then(data => data.rows[0].email)
-    //   .catch(err => {
-    //     res
-    //       .status(404)
-    //       .send("User not found");
-    //   })
-    // };
-
-    // console.log('getExistingEmail(id):', getExistingEmail(id));
-
-    // const verifyNoEmailConflict = function(existingEmail, inputEmail) {
-    //   return true;
-    // }
+    // getUserById(id)
+    //   .then(user => {//.email !== user.email) {
+    //     if(user) {
+    //       res.send("Email already in use");
+    //     }  else {
+    //       console.log('this' );
+    //       updateUser(newUserDetails)
+    //         .then(newUserDetails => {
+    //           console.log('user :', newUserDetails);
+    //           res.redirect(`/:${id}`)
+    //         })
+    //         .catch(e => res.send(e));
+    //     }
 
 
-
-    //update user in the database
-    const query = {
-      text: `UPDATE users
-      SET username = $1,
-        email = $2,
-        password = $3
-      WHERE id = $4`,
-      values: [username, email, hashedPassword, id]
-    };
-
-    db
-      .query(query)
-      .then(result => result.rows[0])
-      .catch(err => console.error('query error', err.stack));
-
-    res.redirect(`/users/${id}`);
+    //     })
+        // else {
+        //   res.send("Email already in use");
+        // }
+      // })
 
 
   });
