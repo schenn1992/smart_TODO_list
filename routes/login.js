@@ -44,11 +44,19 @@ module.exports = (db) => {
           req.session.user_id = user.id;
           return res.redirect("/");
         }
-      } else {
-        return res.send("403 error. Please enter valid email or password");
       }
+      return res.send("403 error. Please enter valid email or password");
+
     });
+
+
+
+
+
+
+
   });
   return router;
 
 }
+//when clicked on Profile, i should be direct to users
