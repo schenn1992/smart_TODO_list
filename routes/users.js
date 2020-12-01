@@ -41,7 +41,7 @@ module.exports = (db) => {
           email,
           password,
           avatarId
-        }
+        };
 
         res.render("users", templateVars);
       })
@@ -49,55 +49,78 @@ module.exports = (db) => {
         res
           .status(404)
           .send("User not found");
-      })
+      });
   });
+
+  //checks if the email is already in use in the db
+  //move to helpers
+  const getUserByEmail = function(email) {
+    const query = {
+      text: `SELECT * FROM users
+    WHERE email = $1
+    `,
+      values: [email]
+    };
+
+    return db.query(query)
+      .then(res => {
+        return !res.rows[0] ? res.rows : res.rows[0];
+      })
+      .catch(e => res.send(e));
+  };
+
+  //checks that all fields have input, so there are no NULL values sent to db
+  //move to helpers
+  const verifyUserInput = function(input1, input2, input3) {
+    if (!input1 || !input2 || !input3) {
+      return false;
+    }
+    return true;
+  };
 
   // Update user's profile
   router.post("/:id", (req, res) => {
 
     //extract user id from URL
     const id = req.params.id;
+
     //extract user input
     const { username, email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    // //to be moved to helper file once I figure out how to import/export
-    // //gets email from db
-    // const getExistingEmail = function(id) {
-    // return  db.query(`SELECT email FROM users WHERE id = ${id}`)
-    //   .then(data => data.rows[0].email)
-    //   .catch(err => {
-    //     res
-    //       .status(404)
-    //       .send("User not found");
-    //   })
-    // };
+    if (verifyUserInput(username, email, password)) {
+      getUserByEmail(email)
+        .then(user => {
+          //if db user is same as input user
+          if (user.email === email) {
+            return res.render("error", { error: 'Email is already in use!'});
 
-    // console.log('getExistingEmail(id):', getExistingEmail(id));
+          } else {
+            //update user in the database
+            const query = {
+              text: `UPDATE users
+              SET username = $1,
+                email = $2,
+                password = $3
+              WHERE id = $4
+              RETURNING *`,
+              values: [username, email, hashedPassword, id]
+            };
 
-    // const verifyNoEmailConflict = function(existingEmail, inputEmail) {
-    //   return true;
-    // }
+            db
+              .query(query)
+              .then(result => result.rows[0])
+              .catch(err => console.error('query error', err.stack));
 
+            res.redirect(`/users/${id}`);
+          }
+        })
+        .catch(e => res.send(e));
 
-
-    //update user in the database
-    const query = {
-      text: `UPDATE users
-      SET username = $1,
-        email = $2,
-        password = $3
-      WHERE id = $4`,
-      values: [username, email, hashedPassword, id]
-    };
-
-    db
-      .query(query)
-      .then(result => result.rows[0])
-      .catch(err => console.error('query error', err.stack));
-
-    res.redirect(`/users/${id}`);
-
+      //return error if any of the form fields are empty
+    } else {
+      return res.render("error", { error: 'Fields cannot be empty!'});
+    }
 
   });
 
