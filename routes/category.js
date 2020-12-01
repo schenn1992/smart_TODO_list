@@ -4,11 +4,79 @@ const router  = express.Router();
 module.exports = (db) => {
   // gives a list of the user's category
   // category must be movies, restaurants, books, or products for query to work
-  const selectUserItems = (userId, category) => {
+  // const selectUserItems = (userId) => {
+  //   const queryString = `
+  //     SELECT users.id, users_movies.movie_id, users_restaurants.restaurant_id, users_books.book_id, users_products.product_id
+  //     FROM users
+  //     LEFT JOIN users_movies ON users_movies.user_id = users.id
+  //     LEFT JOIN users_restaurants ON users_restaurants.user_id = users.id
+  //     LEFT JOIN users_books ON users_books.user_id = users.id
+  //     LEFT JOIN users_products ON users_products.user_id = users.id
+  //     WHERE users.id = $1
+  //   `;
+  //   const values = [userId];
+  //   return db.query(queryString, values)
+  //     .then(res => {
+  //       console.log(res.rows);
+  //       return res.rows;
+  //     })
+  //     .catch(e => res.send(e));
+  // }
+
+  const selectUserMovies = (userId) => {
     const queryString = `
-      SELECT *
-      FROM users_${category}
-      WHERE user_id = $2
+      SELECT users.id, users_movies.movie_id
+      FROM users
+      JOIN users_movies ON users_movies.user_id = users.id
+      WHERE users.id = $1
+    `;
+    const values = [userId];
+    return db.query(queryString, values)
+      .then(res => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+  const selectUserRestaurants = (userId) => {
+    const queryString = `
+      SELECT users.id, users_restaurants.restaurant_id
+      FROM users
+      JOIN users_restaurants ON users_restaurants.user_id = users.id
+      WHERE users.id = $1
+    `;
+    const values = [userId];
+    return db.query(queryString, values)
+      .then(res => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+  const selectUserBooks = (userId) => {
+    const queryString = `
+      SELECT users.id, users_books.book_id
+      FROM users
+      JOIN users_books ON users_books.user_id = users.id
+      WHERE users.id = $1
+    `;
+    const values = [userId];
+    return db.query(queryString, values)
+      .then(res => {
+        console.log(res.rows);
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+  const selectUserProducts = (userId) => {
+    const queryString = `
+      SELECT users.id, users_products.product_id
+      FROM users
+      JOIN users_products ON users_products.user_id = users.id
+      WHERE users.id = $1
     `;
     const values = [userId];
     return db.query(queryString, values)
@@ -28,21 +96,51 @@ module.exports = (db) => {
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
 
-    selectUserItems(userId, categories[0])
+    // Testing select all items for a user
+    selectUserItems(userId)
       .then(res => {
         console.log(res);
         // res.forEach(element => userList.push(element))
         // console.log("userlist: ", userList);
       })
       .catch(e => res.send(e));
-    console.log("user list: ", userList);
 
-    // categories.forEach(category => {
-    //   selectUserItems(userId, category)
-    //   .then(res => userList.forEach(element => userList.push(element)))
-    //   .catch(e => res.send(e));
-    //   });
-    // console.log(userList);
+    // Testing select all movies for a user
+    selectUserMovies(userId)
+      .then(res => {
+        console.log(res);
+        // res.forEach(element => userList.push(element))
+        // console.log("userlist: ", userList);
+      })
+      .catch(e => res.send(e));
+
+    // Testing select all restaurants for a user
+    selectUserRestaurants(userId)
+      .then(res => {
+        console.log(res);
+        // res.forEach(element => userList.push(element))
+        // console.log("userlist: ", userList);
+      })
+      .catch(e => res.send(e));
+
+    // Testing select all books for a user
+    selectUserBooks(userId)
+      .then(res => {
+        console.log(res);
+        // res.forEach(element => userList.push(element))
+        // console.log("userlist: ", userList);
+      })
+      .catch(e => res.send(e));
+
+    // Testing select all products for a user
+    selectUserProducts(userId)
+      .then(res => {
+        console.log(res);
+        // res.forEach(element => userList.push(element))
+        // console.log("userlist: ", userList);
+      })
+      .catch(e => res.send(e));
+
 
     const templateVars = {
 
