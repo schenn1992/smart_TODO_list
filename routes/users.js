@@ -54,12 +54,13 @@ module.exports = (db) => {
 
   //checks if the email is already in use in the db
   //move to helpers
-  const getUserByEmail = function(email) {
+  const getUserByInfo = function(email, id) {
     const query = {
       text: `SELECT * FROM users
     WHERE email = $1
+    AND id <> $2
     `,
-      values: [email]
+      values: [email, id]
     };
 
     return db.query(query)
@@ -89,7 +90,7 @@ module.exports = (db) => {
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     if (verifyUserInput(username, email, password)) {
-      getUserByEmail(email)
+      getUserByInfo(email, id)
         .then(user => {
           //if db user is same as input user
           if (user.email === email) {
