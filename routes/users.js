@@ -8,7 +8,6 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
-const alert = require('../lib/helpers')
 
 module.exports = (db) => {
   // Gets the all users from the db as a JSON
@@ -42,7 +41,7 @@ module.exports = (db) => {
           email,
           password,
           avatarId
-        }
+        };
 
         res.render("users", templateVars);
       })
@@ -50,32 +49,34 @@ module.exports = (db) => {
         res
           .status(404)
           .send("User not found");
-      })
+      });
   });
 
   //checks if the email is already in use in the db
   //move to helpers
   const getUserByEmail = function(email) {
     const query = {
-    text: `SELECT * FROM users
+      text: `SELECT * FROM users
     WHERE email = $1
     `,
-    values: [email]
-    }
+      values: [email]
+    };
 
     return db.query(query)
-    .then(res => {return !res.rows[0] ? res.rows : res.rows[0]})
-    .catch(e => res.send(e));
-  }
+      .then(res => {
+        return !res.rows[0] ? res.rows : res.rows[0];
+      })
+      .catch(e => res.send(e));
+  };
 
   //checks that all fields have input, so there are no NULL values sent to db
   //move to helpers
   const verifyUserInput = function(input1, input2, input3) {
-    if(!input1 || !input2 || !input3) {
+    if (!input1 || !input2 || !input3) {
       return false;
     }
     return true;
-  }
+  };
 
   // Update user's profile
   router.post("/:id", (req, res) => {
@@ -87,11 +88,11 @@ module.exports = (db) => {
     const { username, email, password } = req.body;
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    if(verifyUserInput(username, email, password)) {
+    if (verifyUserInput(username, email, password)) {
       getUserByEmail(email)
         .then(user => {
           //if db user is same as input user
-          if(user.email === email) {
+          if (user.email === email) {
             return res.render("error", { error: 'Email is already in use!'});
 
           } else {
@@ -116,9 +117,9 @@ module.exports = (db) => {
         })
         .catch(e => res.send(e));
 
-        //return error if any of the form fields are empty
-      } else {
-        return res.render("error", { error: 'Fields cannot be empty!'});
+      //return error if any of the form fields are empty
+    } else {
+      return res.render("error", { error: 'Fields cannot be empty!'});
     }
 
   });

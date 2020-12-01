@@ -6,10 +6,10 @@ $(() => {
     method: "GET",
     url: "/users/api"
   }).done((users) => {
-    for(user of users.users) {
+    for (user of users.users) {
       $("<div>").text(user.name).appendTo($("body"));
     }
-  });;
+  });
 });
 
 
@@ -18,8 +18,8 @@ $(document).ready(() => {
   const alert = function(message) {
     $('.error').slideDown('slow', 'swing', function() {
       $('.error')
-      .text(`${message}`)
-      .css('visibility', 'visible');
+        .text(`${message}`)
+        .css('visibility', 'visible');
     });
   };
 
