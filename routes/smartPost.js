@@ -23,10 +23,13 @@ module.exports = (db) => {
 
     if (movieSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "movie");
-      params = searchMovie(search);
+      console.log("post api search: ", searchMovie(search));
+      // searchMovie(search)
+      //   .then(data => data)
+      //   .catch(e => res.send(e));
     }
 
-    console.log("params: ", params);
+    // console.log("params: ", params);
     // console.log("searchMovie: ", searchMovie(userInput));
 
     res.send("Adding new item OK!");
