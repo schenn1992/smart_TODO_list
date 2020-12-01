@@ -1,21 +1,9 @@
 // this is the main nav container
 .navbar-nav {
-  display: flex;
-  align-items: left;
-  justify-items: center;
+  font-family: 'M PLUS 1p', sans-serif;
 }
 
 // Desktop
 @media only screen and (min-width: 1024px) {
-  .navbar-nav {
-    display: flex;
-    align-items: left;
-    justify-items: center;
-  }
 
-  //this is just the box that contains login and logout, right?
-  .profile-logout {
-    flex-wrap: nowrap;
-    align-self: flex-end;
-  }
 }

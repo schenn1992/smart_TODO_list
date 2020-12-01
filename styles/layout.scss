@@ -11,21 +11,20 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-flow: column wrap;
-    h2 {
-      font-family: 'Yellowtail', cursive;
-    }
+    font-family: 'Yellowtail', cursive;
+
     div {
       display: flex;
+      justify-content: center;
+      align-items: center;
       width: 300px;
       padding: 50px;
       border: 3px solid black;
       margin: 5px;
-      justify-content: center;
-      align-items: center;
     }
   }
 }
+
 
 
 
