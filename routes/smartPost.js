@@ -6,7 +6,9 @@ const {
   restaurantSearch,
   bookSearch,
   productSearch,
-  searchMovie} = require('../lib/helpers');
+  removeKeyword,
+  searchMovie
+  } = require('../lib/helpers');
 
 module.exports = (db) => {
   // Gets form to add new item
@@ -17,13 +19,15 @@ module.exports = (db) => {
   // Post new item
   router.post("/", (req, res) => {
     const userInput = req.body.text;
+    let params;
 
     if (movieSearch(userInput.split(" "))) {
-      console.log("searchMovie: ", searchMovie(userInput));
+      const search = removeKeyword(userInput.split(" "), "movie");
+      params = searchMovie(search);
     }
-    console.log("searchMovie: ", searchMovie(userInput));
-    searchMovie(userInput);
 
+    console.log("params: ", params);
+    // console.log("searchMovie: ", searchMovie(userInput));
 
     res.send("Adding new item OK!");
     // console.log("movie search: ", movieSearch(userInput.split(" ")));
