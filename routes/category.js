@@ -97,13 +97,13 @@ module.exports = (db) => {
     let userList = [];
 
     // Testing select all items for a user
-    selectUserItems(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
+    // selectUserItems(userId)
+    //   .then(res => {
+    //     console.log(res);
+    //     // res.forEach(element => userList.push(element))
+    //     // console.log("userlist: ", userList);
+    //   })
+    //   .catch(e => res.send(e));
 
     // Testing select all movies for a user
     selectUserMovies(userId)

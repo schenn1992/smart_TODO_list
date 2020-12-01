@@ -9,6 +9,9 @@ module.exports = (db) => {
 
   // Post new item
   router.post("/", (req, res) => {
+    const item = req.body.text;
+    console.log("user item input: ", item);
+
     res.send("Adding new item OK!");
   });
 
