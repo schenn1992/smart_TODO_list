@@ -25,10 +25,11 @@ module.exports = (db) => {
 
   const selectUserMovies = (userId) => {
     const queryString = `
-      SELECT users.id, users_movies.movie_id
-      FROM users
-      JOIN users_movies ON users_movies.user_id = users.id
-      WHERE users.id = $1
+    SELECT movies.title, movies.rating, movies.synopsis
+    FROM users
+    JOIN users_movies ON users_movies.user_id = users.id
+    JOIN movies ON users_movies.movie_id = movies.id
+    WHERE users.id = $1
     `;
     const values = [userId];
     return db.query(queryString, values)
@@ -96,57 +97,55 @@ module.exports = (db) => {
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
 
-    // Testing select all items for a user
-    selectUserItems(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
+    // // Testing select all items for a user
+    // selectUserItems(userId)
+    //   .then(res => {
+    //     console.log(res);
+    //     // res.forEach(element => userList.push(element))
+    //     // console.log("userlist: ", userList);
+    //   })
+    //   .catch(e => res.send(e));
 
-    // Testing select all movies for a user
+    //sends results to the browser(accessed in helpers.js)
     selectUserMovies(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
+      .then(result => {
+        res.send(result);
       })
       .catch(e => res.send(e));
 
-    // Testing select all restaurants for a user
-    selectUserRestaurants(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
+    // // Testing select all restaurants for a user
+    // selectUserRestaurants(userId)
+    //   .then(res => {
+    //     console.log(res);
+    //     // res.forEach(element => userList.push(element))
+    //     // console.log("userlist: ", userList);
+    //   })
+    //   .catch(e => res.send(e));
 
-    // Testing select all books for a user
-    selectUserBooks(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
+    // // Testing select all books for a user
+    // selectUserBooks(userId)
+    //   .then(res => {
+    //     console.log(res);
+    //     // res.forEach(element => userList.push(element))
+    //     // console.log("userlist: ", userList);
+    //   })
+    //   .catch(e => res.send(e));
 
-    // Testing select all products for a user
-    selectUserProducts(userId)
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
+    // // Testing select all products for a user
+    // selectUserProducts(userId)
+    //   .then(res => {
+    //     console.log(res);
+    //     // res.forEach(element => userList.push(element))
+    //     // console.log("userlist: ", userList);
+    //   })
+    //   .catch(e => res.send(e));
 
 
     const templateVars = {
 
     };
 
-    res.render("index", templateVars);
+    //res.send("index",);
     // res.send("All Categories Page OK!");
   });
 
