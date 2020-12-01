@@ -36,22 +36,19 @@ module.exports = (db) => {
   // Posts the user's login information and checks to see if it matches with the database
   router.post("/", (req, res) => {
     const { email, password } = req.body;
-    const user = getUserByEmail(email); // return object with user email/password
-    console.log("input email: ", email);
-    console.log("input password: ", password);
-    console.log("user.email: ", user.email);
-    if (user.email === email) {
-      console.log("email check passed");
-      if (bcrypt.compareSync(password, user.password)) {
-        console.log("password check passed");
-        req.session.user_id = user.id;
-        return res.redirect("/");
+    const user = getUserByEmail(email).then(user => {
+      if (user.email === email) {
+        console.log("email check passed");
+        if (bcrypt.compareSync(password, user.password)) {
+          console.log("password check passed");
+          req.session.user_id = user.id;
+          return res.redirect("/");
+        }
+      } else {
+        return res.send("403 error. Please enter valid email or password");
       }
-    } else {
-      return res.send("403 error. Please enter valid email or password");
-    }
+    });
   });
-
   return router;
 
 }
