@@ -1,0 +1,41 @@
+div.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  div.card {
+    width: 50%;
+    margin-top: 2em;
+  }
+
+  div.user-inputs {
+    margin-top: 2em;
+
+    .form-group {
+      width: 30em;
+    }
+  }
+
+  div.buttons {
+    margin-top: 1em;
+
+    .btn:first-child {
+      margin-right: 5em;
+    }
+
+    .btn:last-child {
+      margin-left: 5em;
+    }
+  }
+}
+
+
+
+
+
+
+// Desktop view
+@media only screen and (min-width: 1024px) {
+
+}
