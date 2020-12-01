@@ -20,7 +20,7 @@
 
   <!-- JS scripts -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+  <!-- <script type="text/javascript" src="/scripts/app.js"></script> -->
 </head>
 
 <body>
@@ -31,7 +31,7 @@
       <img src= "https://raw.githubusercontent.com/schenn1992/smart_TODO_list/master/public/avatars/identicon<%= avatarId %>.png" class="card-img-top" alt="avatar">
     </div>
     <div class="user-inputs">
-      <form action="/users/<%= id %>" method="POST">
+      <form id="profile-inputs" action="/users/<%= id %>" method="POST">
         <div class="form-group">
           <input type="text" class="form-control form-control-lg" id="username" name="username" placeholder="<%= username %>">
         </div>
