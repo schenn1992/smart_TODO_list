@@ -1,0 +1,28 @@
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  input {
+    margin: 5%;
+    width: 150%;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+// Desktop
+@media only screen and (min-width: 1024px) {
+
+}
