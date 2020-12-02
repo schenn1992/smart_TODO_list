@@ -1,6 +1,9 @@
 const express = require('express');
 const router  = express.Router();
 const bcrypt = require('bcrypt');
+const app = express();
+
+
 
 module.exports = (db) => {
   // Gets the user id from the database
@@ -67,22 +70,15 @@ module.exports = (db) => {
       .then(email => {
         if (email) {
           return res.status(400).send("Email already in use");
-        } else {
+        }
           // Adds the user to the database
-          addUser(user)
+        addUser(user)
             .then(user => {
-              // Sets cookie to the user's id
-              req.session.userId = user.id;
-              const templateVars = {user: req.session.userId }
-              console.log('templateVars :', templateVars);
-              // Redirect to user's todo list after registering
+              const templateVars = {user: user}
               res.render("index", templateVars);
               return res.redirect("/");
             })
-
-        }
-      });
-
+        });
   });
 
   return router;
