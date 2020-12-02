@@ -15,19 +15,31 @@
           <li class="nav-item">
             <a class="nav-link" href="#">Books</a>
           </li>
-          <li class="nav-item flex-grow-1">
+          <li class="nav-item">
             <a class="nav-link" href="#">Products</a>
           </li>
-          <div class="profile-logout">
+
+          <% if (user) { %>
+          <li class="nav-item">
+            <a class="nav-link" href="">Logged In As: <%= user.email %></a>
+          </li>
+
+          <li class="nav-item">
+            <form action="/logout" method="POST">
+              <input type="submit" name="submit" value="Logout">
+            </form>
+          </li>
+          <% } else { %>
             <li class="nav-item">
-              <a class="nav-link" href="#">Profile</a>
+              <a class="nav-link" href="/register">Register</a>
             </li>
             <li class="nav-item">
-              <form action="/logout" method="POST">
-                <input type="submit" name="submit" value="Logout">
-              </form>
+              <a class="nav-link" href="">Profile</a>
             </li>
-          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Login</a>
+            </li>
+          <% } %>
         </ul>
       </div>
     </nav>

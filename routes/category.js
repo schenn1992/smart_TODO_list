@@ -43,11 +43,9 @@ module.exports = (db) => {
     //   .catch(e => res.send(e));
     //   });
     // console.log(userList);
-
     const templateVars = {
-
+      user
     };
-
     res.render("index", templateVars);
     // res.send("All Categories Page OK!");
   });

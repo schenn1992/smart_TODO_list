@@ -6,6 +6,7 @@ const { getUserByEmail } = require ("../lib/helpers.js");
 const app = express();
 
 
+
 let users = {};
 
 app.use(cookieSession({
@@ -15,8 +16,30 @@ app.use(cookieSession({
 
 module.exports = (db) => {
   // Get login page
+  const getUserById = (id) => {
+    const queryString = `
+      SELECT * FROM users
+      WHERE id = $1
+    `
+    const values = [id];
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows[0];
+      })
+  }
+
   router.get("/", (req, res) => {
-    res.render("login");
+    console.log("session: ", req.session);
+    if (!req.session.user_id) {
+      res.render("login", {user: null})
+    } else {
+      getUserById(req.session.user_id).then(user => {
+        console.log("user: ", user)
+        const templateVars = {user};
+        res.render("login", templateVars);
+
+      })
+    }
   });
 
   const getUserByEmail = (email) => {
@@ -30,13 +53,12 @@ module.exports = (db) => {
         console.log(res.rows[0]);
         return res.rows[0];
       })
-      .catch(e => res.send(e));
-  };
 
+  };
   // Posts the user's login information and checks to see if it matches with the database
   router.post("/", (req, res) => {
-    const { email, password } = req.body;
-    const user = getUserByEmail(email).then(user => {
+    const {email, password} = req.body;
+    getUserByEmail(email).then(user => {
       if (user.email === email) {
         console.log("email check passed");
         if (bcrypt.compareSync(password, user.password)) {
@@ -48,12 +70,6 @@ module.exports = (db) => {
       return res.send("403 error. Please enter valid email or password");
 
     });
-
-
-
-
-
-
 
   });
   return router;

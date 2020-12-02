@@ -22,6 +22,9 @@
 
 <body>
   <%- include("partials/_header") %>
+  <% if (!user) { %>
+  <h1>Welcome</h1>
+  <% } else { %>
   <main class="main-categories">
     <div class="category-movies">
       <h2>Movies</h2>
@@ -36,6 +39,7 @@
       <h2>Products</h2>
     </div>
   </main>
+  <% } %>
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
     crossorigin="anonymous"></script>

@@ -11,18 +11,20 @@ module.exports = (db) => {
     `;
     const values = [id];
     return db.query(queryString, values)
-      .then(res => res.rows[0].id)
-      .catch(e => res.send(e));
+      .then(res => res.rows[0])
+
   };
 
   // Get register page
   router.get("/", (req, res) => {
    // Set the user id with the id in the database
-    const userId = getUserId(req.session["user_id"]);
-    const templateVars = {
-      user_id: userId
-    };
-    return res.render("register", templateVars);
+    getUserId(req.session["user_id"]).then(user_id => {
+      const templateVars = {
+        user: user_id
+      };
+      return res.render("register", templateVars);
+
+    });
   });
 
   // Checks if an email is already in the database
@@ -34,7 +36,6 @@ module.exports = (db) => {
     const values = [email];
     return db.query(queryString, values)
       .then(res => res.rows[0])
-      .catch(e => res.send(e));
   };
 
   // Add user to database
@@ -47,7 +48,6 @@ module.exports = (db) => {
     const values = [user.username, user.email, user.password, user.avatar_id];
     return db.query(queryString, values)
       .then(res => res.rows[0])
-      .catch(e => res.send(e));
   };
 
   // Post and Create new user
@@ -57,7 +57,7 @@ module.exports = (db) => {
     if (!user.email || !user.password) {
       return res.status(400).send("Invalid email or password");
     }
-    // Hash the user's password
+
     user.password = bcrypt.hashSync(user.password, 12);
     // Generate a random avatar id for the user
     user.avatar_id = Math.floor(Math.random() * Math.floor(9) + 1);
@@ -73,12 +73,15 @@ module.exports = (db) => {
             .then(user => {
               // Sets cookie to the user's id
               req.session.userId = user.id;
+              const templateVars = {user: req.session.userId }
               // Redirect to user's todo list after registering
-              return res.redirect("/");
+              res.redirect("/", templateVars);
+              // return res.redirect("/");
             })
-            .catch(e => res.send(e));
+
         }
       });
+
   });
 
   return router;
