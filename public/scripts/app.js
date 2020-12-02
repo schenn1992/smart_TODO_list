@@ -15,13 +15,22 @@ $(() => {
 
 $(document).ready(() => {
 
-  const alert = function(message) {
-    $('.error').slideDown('slow', 'swing', function() {
-      $('.error')
-        .text(`${message}`)
-        .css('visibility', 'visible');
-    });
-  };
+  loadCategory('.category-movies');
+  loadCategory('.category-restaurants');
+  loadCategory('.category-books');
+  loadCategory('.category-products');
+
+});
+
+  //bring whatever is to be used inside the document.ready function
+  // in case we implement the user alerts differently
+  // const alert = function(message) {
+  //   $('.error').slideDown('slow', 'swing', function() {
+  //     $('.error')
+  //       .text(`${message}`)
+  //       .css('visibility', 'visible');
+  //   });
+  // };
 
   //values that might be needed - from $('form')
   // //extract user id for AJAX call
@@ -32,6 +41,3 @@ $(document).ready(() => {
   // const username = $('#username').val();
   // const email = $('#email').val();
   // const password = $('#password').val();
-
-
-});
