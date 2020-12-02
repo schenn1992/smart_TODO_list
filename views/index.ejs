@@ -23,6 +23,21 @@
 
 <body>
   <%- include("partials/_header") %>
+
+  <!-- Smart Add Section -->
+  <div class="smart-add">
+    <section class="smart-add-box">
+     <!-- Compose New Item Section-->
+     <h2>Add New Item</h2>
+       <form class="add-item" action="/add" method="POST">
+         <textarea name="text" id="item-text" placeholder="Smart search"></textarea>
+         <div class="submit-item">
+           <button type="submit" class="new-item">Add</button>
+         </div>
+       </form>
+     </section>
+ </div>
+
   <main class="main-categories">
     <div class="category-movies"></div>
     <div class="category-restaurants"></div>
