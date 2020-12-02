@@ -86,7 +86,7 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     //get user id from cookie
     const userId = req.session.user_id;
-    console.log('userId :', userId);
+    // console.log('userId :', userId);
 
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];

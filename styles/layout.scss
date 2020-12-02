@@ -27,6 +27,22 @@ body {
       border: 1px solid black;
       padding: 1em;
       width: 100%;
+
+      h2 {
+        border-bottom: 1px solid black;
+      }
+
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .buttons {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
     }
   }
 }
