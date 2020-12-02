@@ -128,39 +128,41 @@ const loadCategory = function(category) {
     .always(() => console.log('Ajax call successful'));
 };
 
+const categories = ['.category-movies', '.category-restaurants', '.category-books', '.category-products'];
+
+//loops through list of categories and toggles their visibility
+const toggleCategoryDisplay = function(category) {
+  for (const item of categories) {
+    $(`${item}`).empty();
+    if (item !== category) {
+      $(`${item}`).css('display', 'none');
+    } else {
+      $(`${item}`).css('display', 'flex');
+    }
+  }
+}
+
 //functions to display specific category on nav bar click
 const showMovies = function() {
-  $('.category-movies').empty();
-  $('.category-restaurants').empty();
-  $('.category-books').empty();
-  $('.category-products').empty();
+  toggleCategoryDisplay('.category-movies');
 
   loadCategory('.category-movies');
 };
 
 const showRestaurants = function() {
-  $('.category-movies').empty();
-  $('.category-restaurants').empty();
-  $('.category-books').empty();
-  $('.category-products').empty();
+  toggleCategoryDisplay('.category-restaurants');
 
   loadCategory('.category-restaurants');
 };
 
 const showBooks = function() {
-  $('.category-movies').empty();
-  $('.category-restaurants').empty();
-  $('.category-books').empty();
-  $('.category-products').empty();
+  toggleCategoryDisplay('.category-books');
 
   loadCategory('.category-books');
 };
 
 const showProducts = function() {
-  $('.category-movies').empty();
-  $('.category-restaurants').empty();
-  $('.category-books').empty();
-  $('.category-products').empty();
+  toggleCategoryDisplay('.category-products');
 
   loadCategory('.category-products');
 };
