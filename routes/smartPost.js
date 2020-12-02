@@ -25,11 +25,22 @@ module.exports = (db) => {
     RETURNING *
     `;
     const values = [item.title, item.rating, item.plot];
-    // console.log(item);
     return db.query(queryString, values)
       .then(res => res.rows[0])
-      .catch(e => res.send(e));
+      .catch(e => res.send(`Adding to movie database error: ${e}`));
   };
+
+  const addToProductDatabase = (item) => {
+    const queryString = `
+    INSERT INTO products (name, rating, price)
+    VALUES ($1, $2, $3)
+    RETURNING *
+    `;
+    const values = [item.title, item.rating, item.price];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(`Adding to product database error: ${e}`));
+  }
 
   // add user id and category id to the users and categories many to many table
   const addToUsersAndCategoriesDatabase = (category, userId, itemId) => {
@@ -88,15 +99,12 @@ module.exports = (db) => {
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
-              .catch(e => res.send("Cannot find movie, try again"));
+              .catch(e => res.send("Invalid movie, try again"));
           } else {
             return res.status(400).send("Cannot add item, try a different search!");
           }
         });
     }
-
-    console.log(productSearch(userInput.split(" ")));
-    console.log(removeKeyword(userInput.split(" "), "product"));
 
     if (productSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "product");
@@ -106,10 +114,31 @@ module.exports = (db) => {
           // extract the first product
           const description = results.products[0];
           const title = description.title;
-          const price = description.price.current_price;
+          const price = description.price["current_price"];
           const rating = description.reviews.rating;
           const data = { title, price, rating };
-
+          // console.log(typeof price);
+          console.log(data);
+          // Check if the API returns a title, rating, and price
+          if (data.title && data.price && data.rating) {
+            addToProductDatabase(data)
+              .then(() => {
+                console.log("inside add to db: ", data);
+                // Gets the table length to use as the new movies_id
+                getCategoryLength("products")
+                  .then(count => {
+                    const productId = Number(count);
+                    // Adds the users.id and products.id to the many to many table
+                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
+                  })
+                .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
+              })
+              .catch(e => res.send("Invalid product, try again"));
+          } else {
+            return res.status(400).send("Cannot add item, try a different search!");
+          }
         })
     }
 
