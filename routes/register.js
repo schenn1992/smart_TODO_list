@@ -74,6 +74,7 @@ module.exports = (db) => {
               // Sets cookie to the user's id
               req.session.userId = user.id;
               const templateVars = {user: req.session.userId }
+              console.log('templateVars :', templateVars);
               // Redirect to user's todo list after registering
               res.render("index", templateVars);
               return res.redirect("/");

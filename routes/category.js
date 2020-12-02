@@ -10,27 +10,7 @@ router.use(
 );
 
 module.exports = (db) => {
-  // gives a list of the user's category
-  // category must be movies, restaurants, books, or products for query to work
-  // const selectUserItems = (userId) => {
-  //   const queryString = `
-  //     SELECT users.id, users_movies.movie_id, users_restaurants.restaurant_id, users_books.book_id, users_products.product_id
-  //     FROM users
-  //     LEFT JOIN users_movies ON users_movies.user_id = users.id
-  //     LEFT JOIN users_restaurants ON users_restaurants.user_id = users.id
-  //     LEFT JOIN users_books ON users_books.user_id = users.id
-  //     LEFT JOIN users_products ON users_products.user_id = users.id
-  //     WHERE users.id = $1
-  //   `;
-  //   const values = [userId];
-  //   return db.query(queryString, values)
-  //     .then(res => {
-  //       console.log(res.rows);
-  //       return res.rows;
-  //     })
-  //     .catch(e => res.send(e));
-  // }
-
+  //queries db for all movies of given user
   const selectUserMovies = (userId) => {
     const queryString = `
     SELECT movies.title, movies.rating, movies.synopsis
@@ -42,12 +22,13 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
   }
 
+  //queries db for all restaurants of given user
   const selectUserRestaurants = (userId) => {
     const queryString = `
     SELECT restaurants.name, restaurants.rating, restaurants.country, restaurants.street, restaurants.city, restaurants.province, restaurants.post_code
@@ -59,12 +40,13 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
   }
 
+  //queries db for all books of given user
   const selectUserBooks = (userId) => {
     const queryString = `
 	  SELECT books.title, books.author, books.rating, books.synopsis
@@ -76,12 +58,13 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
   }
 
+  //queries db for all products of given user
   const selectUserProducts = (userId) => {
     const queryString = `
     SELECT products.name, products.rating, products.price
@@ -93,7 +76,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -101,27 +84,24 @@ module.exports = (db) => {
 
   // Gets all categories list
   router.get("/", (req, res) => {
-    // user req.session once user can login
-    // const userId = req.session["user_id"];
-    // temp setting user to 1
+    //get user id from cookie
     const userId = req.session.user_id;
     console.log('userId :', userId);
 
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
+    // console.log('userId :', userId);
 
     //sends all query results to the browser at the same time
     Promise.all([selectUserMovies(userId), selectUserRestaurants(userId), selectUserBooks(userId), selectUserProducts(userId)])
     .then(result => {
 
-      //result is an array of arrays
+      //result is an array of arrays that gets sent to AJAX call
       res.send(result);
     })
     .catch(e => res.send(e));
 
 
-    //res.send("index",);
-    // res.send("All Categories Page OK!");
   });
 
   // Gets specific item page
