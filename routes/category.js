@@ -1,5 +1,13 @@
 const express = require('express');
+const cookieSession = require('cookie-session');
 const router  = express.Router();
+
+router.use(
+  cookieSession({
+    name: 'session',
+    keys: ['key1', 'key2'],
+  })
+);
 
 module.exports = (db) => {
   // gives a list of the user's category
@@ -96,7 +104,9 @@ module.exports = (db) => {
     // user req.session once user can login
     // const userId = req.session["user_id"];
     // temp setting user to 1
-    const userId = 1;
+    const userId = req.session.user_id;
+    console.log('userId :', userId);
+
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
 
