@@ -110,27 +110,6 @@ module.exports = (db) => {
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
 
-<<<<<<< HEAD
-    selectUserItems(userId, categories[0])
-      .then(res => {
-        console.log(res);
-        // res.forEach(element => userList.push(element))
-        // console.log("userlist: ", userList);
-      })
-      .catch(e => res.send(e));
-    console.log("user list: ", userList);
-
-    // categories.forEach(category => {
-    //   selectUserItems(userId, category)
-    //   .then(res => userList.forEach(element => userList.push(element)))
-    //   .catch(e => res.send(e));
-    //   });
-    // console.log(userList);
-    const templateVars = {
-      user
-    };
-    res.render("index", templateVars);
-=======
     //sends all query results to the browser at the same time
     Promise.all([selectUserMovies(userId), selectUserRestaurants(userId), selectUserBooks(userId), selectUserProducts(userId)])
     .then(result => {
@@ -142,7 +121,6 @@ module.exports = (db) => {
 
 
     //res.send("index",);
->>>>>>> 86b589704943fc0ba255ebb82d2499ebcb1e90a8
     // res.send("All Categories Page OK!");
   });
 

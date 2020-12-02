@@ -59,6 +59,7 @@ module.exports = (db) => {
           let { title, plot, rating } = description;
           rating = Number(rating);
           const data = { title, plot, rating };
+          console.log(data);
 
           if (data.title && data.plot && data.rating) {
             // console.log("data inside if: ", data);
