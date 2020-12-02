@@ -42,7 +42,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -59,7 +59,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -76,7 +76,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -93,7 +93,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -105,7 +105,7 @@ module.exports = (db) => {
     // const userId = req.session["user_id"];
     // temp setting user to 1
     const userId = req.session.user_id;
-    console.log('userId :', userId);
+    // console.log('userId :', userId);
 
     const categories = ["movies", "restaurants", "books", "products"];
     let userList = [];
