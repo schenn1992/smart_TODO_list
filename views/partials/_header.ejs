@@ -18,30 +18,37 @@
           <li class="nav-item">
             <a class="nav-link" id="show-products">Products</a>
           </li>
-
-          <% if (user) { %>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li> -->
+        </ul>
+        <% if (user) { %>
+        <ul class="navbar-nav ml-auto">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="">Profile</a>
+            </li>
+          </ul>
           <li class="nav-item">
             <a class="nav-link" href="">Logged In As: <%= user.email %></a>
           </li>
-
           <li class="nav-item">
             <form action="/logout" method="POST">
               <input type="submit" name="submit" value="Logout">
             </form>
           </li>
-          <% } else { %>
-            <li class="nav-item">
-              <a class="nav-link" href="/register">Register</a>
-            </li>
-            <!-- the profile link should not show when user is not logged in -->
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="">Profile</a>
-            </li> -->
-            <li class="nav-item">
-              <a class="nav-link" href="/login">Login</a>
-            </li>
-          <% } %>
         </ul>
+        <% } else { %>
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/register">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/login">Login</a>
+          </li>
+        </ul>
+        <% } %>
+
       </div>
     </nav>
 </header>
