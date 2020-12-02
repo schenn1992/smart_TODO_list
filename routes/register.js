@@ -46,7 +46,10 @@ module.exports = (db) => {
   `;
     const values = [user.username, user.email, user.password, user.avatar_id];
     return db.query(queryString, values)
-      .then(res => res.rows[0])
+      .then(res => {
+        console.log(res.rows[0]);
+        return res.rows[0];
+      })
       .catch(e => res.send(e));
   };
 
