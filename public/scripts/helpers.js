@@ -1,10 +1,16 @@
 //takes in query result from route and category
 //builds content to display within specific category
 const createCategoryDisplay = function(queryResult, category) {
-  const item = $(`<article class="${category}">`);
+  if(queryResult.length === 0) {
+    return '';
+  }
+
+  const item = $(`<article>`);
 
   switch(category) {
     case '.category-movies':
+      item.append('<h2>Movies</h2>');
+
       for(const object of queryResult) {
         const title = $('<h3>').text(`${object.title}`);
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
@@ -16,6 +22,8 @@ const createCategoryDisplay = function(queryResult, category) {
       }
       break;
     case '.category-restaurants':
+      item.append('<h2>Restaurants</h2>');
+
       for(const object of queryResult) {
         const name = $('<h3>').text(`${object.name}`);
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
@@ -27,6 +35,8 @@ const createCategoryDisplay = function(queryResult, category) {
       }
       break;
     case '.category-books':
+      item.append('<h2>Books</h2>');
+
       for(const object of queryResult) {
         const title = $('<h3>').text(`${object.title}`);
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
@@ -38,6 +48,8 @@ const createCategoryDisplay = function(queryResult, category) {
       }
       break;
     case '.category-products':
+      item.append('<h2>Products</h2>');
+
       for(const object of queryResult) {
         const name = $('<h3>').text(`${object.name}`);
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
