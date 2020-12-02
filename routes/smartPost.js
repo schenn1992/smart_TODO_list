@@ -117,13 +117,16 @@ module.exports = (db) => {
           const price = description.price["current_price"];
           const rating = description.reviews.rating;
           const data = { title, price, rating };
+          // console.log(typeof title);
+          // console.log(typeof rating);
           // console.log(typeof price);
-          console.log(data);
+          // console.log(typeof price);
+          // console.log(data);
           // Check if the API returns a title, rating, and price
           if (data.title && data.price && data.rating) {
             addToProductDatabase(data)
               .then(() => {
-                console.log("inside add to db: ", data);
+                // console.log("inside add to db: ", data);
                 // Gets the table length to use as the new movies_id
                 getCategoryLength("products")
                   .then(count => {
