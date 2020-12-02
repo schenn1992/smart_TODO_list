@@ -75,8 +75,8 @@ module.exports = (db) => {
               req.session.userId = user.id;
               const templateVars = {user: req.session.userId }
               // Redirect to user's todo list after registering
-              res.redirect("/", templateVars);
-              // return res.redirect("/");
+              res.render("index", templateVars);
+              return res.redirect("/");
             })
 
         }
