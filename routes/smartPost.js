@@ -57,6 +57,7 @@ module.exports = (db) => {
         .then(movieJSON => {
           const description = JSON.parse(movieJSON);
           let { title, plot, rating } = description;
+          //see if this conversion still applies(changed the db type)
           rating = Number(rating);
           const data = { title, plot, rating };
 
