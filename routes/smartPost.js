@@ -24,9 +24,10 @@ module.exports = (db) => {
     RETURNING *
     `;
     const values = [item.title, item.rating, item.plot];
+    console.log(item);
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows[0]);
+        console.log("query: ", res.rows[0]);
         return res.rows[0]
       })
       .catch(e => res.send(e));
@@ -55,16 +56,24 @@ module.exports = (db) => {
       searchMovie(search)
         .then(movieJSON => {
           const description = JSON.parse(movieJSON);
-          const { title, plot, rating } = description;
-          data = { title, plot, rating };
-          console.log(data);
+          let { title, plot, rating } = description;
+          rating = Number(rating);
+          const data = { title, plot, rating };
 
-          addToMovieDatabase(data)
-            .then(res => {
-              console.log(res);
-              res.send("Adding new item OK!")
-            })
-            .catch(e => res.send(e));
+          if (data.title && data.plot && data.rating) {
+            // console.log("data inside if: ", data);
+            addToMovieDatabase(data)
+              .then(data => {
+                console.log("res: ", res);
+                res.send("Adding new item OK inside promise!")
+              })
+              .catch(e => res.send(e));
+          } else {
+            return res.status(400).send("Cannot add item, try a different search!");
+          }
+
+
+          // return res.send("Adding new item OK!");
         })
     }
 
