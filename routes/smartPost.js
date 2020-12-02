@@ -59,8 +59,8 @@ module.exports = (db) => {
     const userInput = req.body.text;
     // gets the user id
     const userId = req.session.user_id;
-    const movieLength = Number(getCategoryLength("movies"));
-    console.log("movie length: ", movieLength);
+    // const movieLength = Number(getCategoryLength("movies"));
+    // console.log("movie length: ", movieLength);
 
     if (movieSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "movie");
