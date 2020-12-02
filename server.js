@@ -66,7 +66,22 @@ app.use("/add", smartPostRoutes(db));
 // Warning: avoid creating more routes in this file!
 // Separate them into separate routes files (see above).
 app.get("/", (req, res) => {
-  res.render("index");
+  const getUserById = (id) => {
+    const queryString = `
+      SELECT * FROM users
+      WHERE id = $1
+    `
+    const values = [id];
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows[0];
+      })
+  }
+    getUserById(req.session.user_id).then(user => {
+    const templateVars = {user};
+    res.render("index", templateVars);
+  });
+
 });
 
 app.listen(PORT, () => {

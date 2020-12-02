@@ -36,7 +36,7 @@ module.exports = (db) => {
 
         //pass user information to ejs template
         const templateVars = {
-          id,
+          user: id,
           username,
           email,
           password,

@@ -4,9 +4,11 @@ const router  = express.Router();
 module.exports = (db) => {
   // need to check if this works once users can login
   router.post("/", (req, res) => {
-    req.session.userId = null;
+    req.session = null;
     // will change the redirect to /login after merge
     res.redirect("/");
+
+
   });
 
   return router
