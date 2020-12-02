@@ -76,9 +76,8 @@ module.exports = (db) => {
               const templateVars = {user: req.session.userId }
               console.log('templateVars :', templateVars);
               // Redirect to user's todo list after registering
-              //this is a partial 'fix' by Natalia so that the app won't crash - still not working though
               res.render("index", templateVars);
-              // return res.redirect("../");
+              return res.redirect("/");
             })
 
         }

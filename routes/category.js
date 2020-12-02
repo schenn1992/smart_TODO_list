@@ -86,6 +86,10 @@ module.exports = (db) => {
   router.get("/", (req, res) => {
     //get user id from cookie
     const userId = req.session.user_id;
+    console.log('userId :', userId);
+
+    const categories = ["movies", "restaurants", "books", "products"];
+    let userList = [];
     // console.log('userId :', userId);
 
     //sends all query results to the browser at the same time
