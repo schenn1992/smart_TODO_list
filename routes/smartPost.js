@@ -117,11 +117,10 @@ module.exports = (db) => {
           const price = description.price["current_price"] * 100;
           const rating = description.reviews.rating;
           const data = { title, price, rating };
-          // console.log(typeof title);
-          // console.log(typeof rating);
-          // console.log(typeof price);
-          // console.log(typeof price);
-          // console.log(data);
+
+          // Stretch: add url to the product list
+          // console.log("URL: ", description.url);
+
           // Check if the API returns a title, rating, and price
           if (data.title && data.price && data.rating) {
             addToProductDatabase(data)
