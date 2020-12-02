@@ -2,23 +2,15 @@
 //builds content to display within specific category
 const createCategoryDisplay = function(queryResult, category) {
 
-  let itemsCount = 0;
-  const item = $(`<article>`);
-
-  //displays the number of items in each category
-  if(queryResult.length !== 0) {
-    itemsCount += queryResult.length;
-
+  if(queryResult.length === 0) {
+    return '';
   }
 
-  const itemCounter = $('<p class="items-count">').text(`${itemsCount} items in the category`);
-
-
+  const item = $(`<article>`);
 
   switch(category) {
     case '.category-movies':
       item.append('<h2>Movies</h2>');
-      item.append(itemCounter);
 
       for(const object of queryResult) {
         const header = $('<header>');
@@ -40,10 +32,8 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(synopsis);
       }
       break;
-
     case '.category-restaurants':
       item.append('<h2>Restaurants</h2>');
-      item.append(itemCounter);
 
       for(const object of queryResult) {
         const header = $('<header>');
@@ -65,10 +55,8 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(address);
       }
       break;
-
     case '.category-books':
       item.append('<h2>Books</h2>');
-      item.append(itemCounter);
 
       for(const object of queryResult) {
         const header = $('<header>');
@@ -90,10 +78,8 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(synopsis);
       }
       break;
-
     case '.category-products':
       item.append('<h2>Products</h2>');
-      item.append(itemCounter);
 
       for(const object of queryResult) {
         const header = $('<header>');
@@ -114,7 +100,7 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(rating);
         item.append(price);
       }
-      break;
+    break;
   }
   return item;
 }
@@ -141,7 +127,6 @@ const loadCategory = function(category) {
     })
     .catch(err => console.log(err))
     .always(() => console.log('Ajax call successful'));
-
 };
 
 const categories = ['.category-movies', '.category-restaurants', '.category-books', '.category-products'];
