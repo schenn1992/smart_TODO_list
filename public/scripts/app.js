@@ -15,10 +15,33 @@ $(() => {
 
 $(document).ready(() => {
 
+  //loads index with all available content for specific user
   loadCategory('.category-movies');
   loadCategory('.category-restaurants');
   loadCategory('.category-books');
   loadCategory('.category-products');
+
+  //loads only clicked category(nav bar) - functions in helpers.js
+  $("#show-movies").click(() => {
+    console.log('clicked');
+    showMovies();
+  })
+
+  $("#show-restaurants").click(() => {
+    console.log('clicked');
+    showRestaurants();
+  })
+
+  $("#show-books").click(() => {
+    console.log('clicked');
+    showBooks();
+  })
+
+  $("#show-products").click(() => {
+    console.log('clicked');
+    showProducts();
+  })
+
 
 });
 

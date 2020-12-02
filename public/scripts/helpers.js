@@ -12,11 +12,21 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append('<h2>Movies</h2>');
 
       for(const object of queryResult) {
+        const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
+        const buttonsContainer = $('<div class="buttons">');
+        const doneButton = $('<button type="button" class="done-button">').text('Done');
+        const editButton = $('<button type="button" class="edit-button">').text('Edit');
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
-        const synopsis = $('<h6>').text(`${object.synopsis}`);
+        const synopsis = $('<p>').text(`${object.synopsis}`);
 
-        item.append(title);
+        header.append(title);
+        buttonsContainer.append(doneButton);
+        buttonsContainer.append(editButton);
+        buttonsContainer.append(deleteButton);
+        header.append(buttonsContainer);
+        item.append(header);
         item.append(rating);
         item.append(synopsis);
       }
@@ -25,11 +35,21 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append('<h2>Restaurants</h2>');
 
       for(const object of queryResult) {
+        const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
+        const buttonsContainer = $('<div class="buttons">');
+        const doneButton = $('<button type="button" class="done-button">').text('Done');
+        const editButton = $('<button type="button" class="edit-button">').text('Edit');
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
 
-        item.append(name);
+        header.append(name);
+        buttonsContainer.append(doneButton);
+        buttonsContainer.append(editButton);
+        buttonsContainer.append(deleteButton);
+        header.append(buttonsContainer);
+        item.append(header);
         item.append(rating);
         item.append(address);
       }
@@ -38,11 +58,21 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append('<h2>Books</h2>');
 
       for(const object of queryResult) {
+        const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
+        const buttonsContainer = $('<div class="buttons">');
+        const doneButton = $('<button type="button" class="done-button">').text('Done');
+        const editButton = $('<button type="button" class="edit-button">').text('Edit');
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<h6>').text(`${object.synopsis}`);
 
-        item.append(title);
+        header.append(title);
+        buttonsContainer.append(doneButton);
+        buttonsContainer.append(editButton);
+        buttonsContainer.append(deleteButton);
+        header.append(buttonsContainer);
+        item.append(header);
         item.append(rating);
         item.append(synopsis);
       }
@@ -51,11 +81,21 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append('<h2>Products</h2>');
 
       for(const object of queryResult) {
+        const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
+        const buttonsContainer = $('<div class="buttons">');
+        const doneButton = $('<button type="button" class="done-button">').text('Done');
+        const editButton = $('<button type="button" class="edit-button">').text('Edit');
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const price = $('<h6>').text(`Price: $${object.price /100}`);
 
-        item.append(name);
+        header.append(name);
+        buttonsContainer.append(doneButton);
+        buttonsContainer.append(editButton);
+        buttonsContainer.append(deleteButton);
+        header.append(buttonsContainer);
+        item.append(header);
         item.append(rating);
         item.append(price);
       }
@@ -64,6 +104,7 @@ const createCategoryDisplay = function(queryResult, category) {
   return item;
 }
 
+//loads all existing content for specific user
 const loadCategory = function(category) {
   console.log('AJAX call, loading category');
 
@@ -86,3 +127,41 @@ const loadCategory = function(category) {
     .catch(err => console.log(err))
     .always(() => console.log('Ajax call successful'));
 };
+
+//functions to display specific category on nav bar click
+const showMovies = function() {
+  $('.category-movies').empty();
+  $('.category-restaurants').empty();
+  $('.category-books').empty();
+  $('.category-products').empty();
+
+  loadCategory('.category-movies');
+};
+
+const showRestaurants = function() {
+  $('.category-movies').empty();
+  $('.category-restaurants').empty();
+  $('.category-books').empty();
+  $('.category-products').empty();
+
+  loadCategory('.category-restaurants');
+};
+
+const showBooks = function() {
+  $('.category-movies').empty();
+  $('.category-restaurants').empty();
+  $('.category-books').empty();
+  $('.category-products').empty();
+
+  loadCategory('.category-books');
+};
+
+const showProducts = function() {
+  $('.category-movies').empty();
+  $('.category-restaurants').empty();
+  $('.category-books').empty();
+  $('.category-products').empty();
+
+  loadCategory('.category-products');
+};
+
