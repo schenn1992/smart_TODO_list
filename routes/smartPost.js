@@ -8,7 +8,7 @@ const {
   productSearch,
   removeKeyword,
   searchMovie
-  } = require('../lib/helpers');
+} = require('../lib/helpers');
 
 module.exports = (db) => {
   // Gets form to add new item
@@ -24,32 +24,43 @@ module.exports = (db) => {
     RETURNING *
     `;
     const values = [item.title, item.rating, item.plot];
-    console.log(item);
+    // console.log(item);
     return db.query(queryString, values)
-      .then(res => {
-        console.log("query: ", res.rows[0]);
-        return res.rows[0]
-      })
+      .then(res => res.rows[0])
+      .catch(e => res.send(e));
+  };
+
+  // add user id and category id to the users and categories many to many table
+  const addToUsersAndCategoriesDatabase = (category, userId, itemId) => {
+    const queryString = `
+    INSERT INTO users_${category[0]} (user_id, ${category[1]})
+    VALUES ($1, $2)
+    RETURNING *
+    `;
+    const values = [userId, itemId];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(`Error: ${e}`));
+  }
+
+  const getCategoryLength = (category) => {
+    const queryString = `
+    SELECT count(*)
+    FROM ${category}
+    `;
+    return db.query(queryString)
+      .then(res => res.rows[0].count)
       .catch(e => res.send(e));
   };
 
   // Post new item
   router.post("/", (req, res) => {
+    // user input from the smart post form
     const userInput = req.body.text;
-    // let data;
-
-    // const test = {
-    //   title: 'The Dark Knight ',
-    //   plot:
-    //  'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest psychological and physical tests of his ability to fight injustice.',
-    //   rating: '9.0'
-    // };
-
-    // addToMovieDatabase(test)
-    // .then(res => {
-    //   return res.redirect("/");
-    // })
-    // .catch(e => res.send(e));
+    // gets the user id
+    const userId = req.session.user_id;
+    // const movieLength = Number(getCategoryLength("movies"));
+    // console.log("movie length: ", movieLength);
 
     if (movieSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "movie");
@@ -58,27 +69,37 @@ module.exports = (db) => {
           const description = JSON.parse(movieJSON);
           let { title, plot, rating } = description;
           rating = Number(rating);
-          const data = { title, plot, rating };
+          const data = { title, plot, rating};
 
           if (data.title && data.plot && data.rating) {
-            // console.log("data inside if: ", data);
             addToMovieDatabase(data)
-              .then(data => {
-                console.log("res: ", res);
-                res.send("Adding new item OK inside promise!")
+              .then(() => {
+                // console.log("add to movie db data: ", data);
+
+                getCategoryLength("movies")
+                  .then(count => {
+                    console.log(data);
+                    console.log("get cat: ", count);
+                    // res.redirect("/");
+                    const movieId = Number(count);
+
+                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
+                      //res.redirect("/");
+                  })
+                  .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
+
+
               })
-              .catch(e => res.send(e));
+              .catch(e => res.send("Cannot find movie, try again"));
           } else {
             return res.status(400).send("Cannot add item, try a different search!");
           }
-
-
-          // return res.send("Adding new item OK!");
-        })
+        });
     }
 
-    // return res.send("Adding new item OK!");
   });
 
   return router;
-}
+};
