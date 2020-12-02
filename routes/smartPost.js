@@ -114,7 +114,7 @@ module.exports = (db) => {
           // extract the first product
           const description = results.products[0];
           const title = description.title;
-          const price = description.price["current_price"];
+          const price = description.price["current_price"] * 100;
           const rating = description.reviews.rating;
           const data = { title, price, rating };
           // console.log(typeof title);
