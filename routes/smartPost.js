@@ -165,19 +165,17 @@ module.exports = (db) => {
         .then(bookJSON => {
           const result = JSON.parse(bookJSON);
           const description = result.products[0];
-          // console.log(description);
           const title = description.title;
-          const price = description.price["current_price"] * 100;
+          // const price = description.price["current_price"] * 100;
           const rating = description.reviews.rating;
           const author = "Author";
-          const synopsis = "Synopsis";
+          const synopsis = "API does not provide a synopsis.";
           const data = { title, author, rating, synopsis };
           // console.log(data);
 
           if (data) {
             addToBookDatabase(data)
               .then(() => {
-                console.log(data);
                 // Gets the table length to use as the new book_id
                 getCategoryLength("books")
                   .then(count => {
