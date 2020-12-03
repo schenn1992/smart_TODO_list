@@ -104,28 +104,13 @@ module.exports = (db) => {
     res.send(`You want to edit the movie ${req.params.id}, the input is`);
   })
 
-  //display specific restaurant inside modal
+  //edit specific restaurant
   router.post("/restaurants/:id", (req, res) => {
     //this goes into the server console log
     //this is what the server receives from the browser({userInput})
     console.log(req.body);
     const restId = req.body.id;
     res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
-
-
-
-  })
-
-
-  //edit specific restaurant
-  router.post("/restaurants/:id", (req, res) => {
-    //this goes into the server console log
-    //this is what the server receives from the browser({userInput})
-    console.log(req.body);
-    const restId = req.body.itemId;
-    res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
-
-
 
   })
 

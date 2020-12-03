@@ -46,13 +46,14 @@ const createCategoryDisplay = function(queryResult, category) {
 
           });
 
-        //edit button works its magic via AJAX post call
+        //edit button works its magic via a modal popup that sends the info to the backend
         const editButton =
-        $('<button type="button" class="edit-button">')
+        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#moviesModal">')
           .text('Edit')
           .click(() => {
-            $.post(`category/movies/${id}`) //{title: user input}) - second argument
-              .then((response) => {console.log(response)})
+              $('#moviesModal .item-name').val(object.title)
+              $('#moviesModal .item-id').val(id);
+              console.log(`Edit button clicked for movie ${id}`)
           });
 
         //delete button will work its magic through AJAX delete call (once I figure out how to do that)
@@ -109,8 +110,8 @@ const createCategoryDisplay = function(queryResult, category) {
           .text('Edit')
           .click(() => {
             $('#restaurantsModal .item-name').val(object.name)
-            $('#item-id').val(id);
-            console.log(`edit button clicked for restaurant ${id}`)
+            $('#restaurantsModal .item-id').val(id);
+            console.log(`Edit button clicked for restaurant ${id}`)
           });
 
         //need to implement AJAX delete call
@@ -156,11 +157,12 @@ const createCategoryDisplay = function(queryResult, category) {
           });
 
         const editButton =
-        $('<button type="button" class="edit-button">')
+        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#booksModal">')
           .text('Edit')
           .click(() => {
-            $.post(`category/books/${id}`) //{title: user input}) - second argument
-              .then((response) => {console.log(response)})
+              $('#booksModal .item-name').val(object.title)
+              $('#booksModal .item-id').val(id);
+              console.log(`Edit button clicked for book ${id}`)
           });
 
         //need to implement AJAX delete call
@@ -207,11 +209,12 @@ const createCategoryDisplay = function(queryResult, category) {
           });
 
         const editButton =
-        $('<button type="button" class="edit-button">')
+        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#productsModal">')
           .text('Edit')
           .click(() => {
-            $.post(`category/products/${id}`) //{title: user input}) - second argument
-              .then((response) => {console.log(response)})
+                $('#productsModal .item-name').val(object.name)
+                $('#productsModal .item-id').val(id);
+                console.log(`Edit button clicked for product ${id}`)
           });
 
         //need to implement AJAX delete call

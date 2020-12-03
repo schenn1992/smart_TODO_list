@@ -38,18 +38,57 @@ $(document).ready(() => {
     showProducts();
   })
 
-  $('.modalInput').submit(function(event) {
-    // event.preventDefault();
+  $('#moviesModal').submit(function(event) {
+    event.preventDefault();
 
     //extract user inputs to update db
-    const formInput = $(this).serializeArray();
+    const formInput = $('#moviesModal .modalInput').serializeArray();
     console.log('formInput :', formInput);
     const id = formInput[0].value;
     const name = formInput[1].value;
     const category = formInput[2].value;
 
-    //this posts to the server route via the second param=req.body
+    $.post(`category/movies/${id}`, {id, name, category})
+    .then((response) => {
+      //this goes into the browser console log - comes from the server(res.send)
+      //this is what the browser will display on the page
+      console.log(response)
+
+    })
+
+  })
+
+  $('#restaurantsModal').submit(function(event) {
+    event.preventDefault();
+
+    //extract user inputs to update db
+    const formInput = $('#restaurantsModal .modalInput').serializeArray();
+    console.log('formInput :', formInput);
+    const id = formInput[0].value;
+    const name = formInput[1].value;
+    const category = formInput[2].value;
+
     $.post(`category/restaurants/${id}`, {id, name, category})
+    .then((response) => {
+      //this goes into the browser console log - comes from the server(res.send)
+      //this is what the browser will display on the page
+      console.log(response)
+
+    })
+
+  })
+
+  $('#booksModal').submit(function(event) {
+    event.preventDefault();
+
+    //extract user inputs to update db
+    const formInput = $('#booksModal .modalInput').serializeArray();
+    console.log('formInput :', formInput);
+    const id = formInput[0].value;
+    const name = formInput[1].value;
+    const category = formInput[2].value;
+
+    $.post(`category/books/${id}`, {id, name, category})
     .then((response) => {
       //this goes into the browser console log - comes from the server(res.send)
       //this is what the browser will display on the page
@@ -58,16 +97,24 @@ $(document).ready(() => {
     })
   })
 
+    $('#productsModal').submit(function(event) {
+      event.preventDefault();
 
+      //extract user inputs to update db
+      const formInput = $('#productsModal .modalInput').serializeArray();
+      console.log('formInput :', formInput);
+      const id = formInput[0].value;
+      const name = formInput[1].value;
+      const category = formInput[2].value;
+
+      $.post(`category/products/${id}`, {id, name, category})
+      .then((response) => {
+        //this goes into the browser console log - comes from the server(res.send)
+        //this is what the browser will display on the page
+        console.log(response)
+
+      })
+
+  })
 
 });
-
-  //values that might be needed - from $('form')
-  // //extract user id for AJAX call
-  // const url = event.currentTarget.action;
-  // const userId = url.substring(url.length - 1);
-
-  // //extract user input
-  // const username = $('#username').val();
-  // const email = $('#email').val();
-  // const password = $('#password').val();
