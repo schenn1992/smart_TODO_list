@@ -5,15 +5,13 @@ const createCategoryDisplay = function(queryResult, category) {
   let itemsCount = 0;
   const item = $(`<article>`);
 
-  //displays the number of items in each category
   if(queryResult.length !== 0) {
     itemsCount += queryResult.length;
 
   }
 
+  //displays the number of items in each category
   const itemCounter = $('<p class="items-count">').text(`${itemsCount} items in the category`);
-
-
 
   switch(category) {
     case '.category-movies':
@@ -23,8 +21,8 @@ const createCategoryDisplay = function(queryResult, category) {
       for(const object of queryResult) {
         const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
-        const buttonsContainer = $('<div class="buttons">');
-        const doneButton = $('<button type="button" class="done-button">').text('Done');
+        const buttonsContainer = $('<form class="buttons">');
+        const doneButton = $('<button type="input" class="done-button">').text('Done');
         const editButton = $('<button type="button" class="edit-button">').text('Edit');
         const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
@@ -48,7 +46,7 @@ const createCategoryDisplay = function(queryResult, category) {
       for(const object of queryResult) {
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
-        const buttonsContainer = $('<div class="buttons">');
+        const buttonsContainer = $('<form class="buttons">');
         const doneButton = $('<button type="button" class="done-button">').text('Done');
         const editButton = $('<button type="button" class="edit-button">').text('Edit');
         const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
@@ -73,7 +71,7 @@ const createCategoryDisplay = function(queryResult, category) {
       for(const object of queryResult) {
         const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
-        const buttonsContainer = $('<div class="buttons">');
+        const buttonsContainer = $('<form class="buttons">');
         const doneButton = $('<button type="button" class="done-button">').text('Done');
         const editButton = $('<button type="button" class="edit-button">').text('Edit');
         const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
@@ -98,7 +96,7 @@ const createCategoryDisplay = function(queryResult, category) {
       for(const object of queryResult) {
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
-        const buttonsContainer = $('<div class="buttons">');
+        const buttonsContainer = $('<form class="buttons">');
         const doneButton = $('<button type="button" class="done-button">').text('Done');
         const editButton = $('<button type="button" class="edit-button">').text('Edit');
         const deleteButton = $('<button type="button" class="delete-button">').text('Delete');

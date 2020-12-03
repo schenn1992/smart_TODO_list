@@ -15,7 +15,7 @@ $(() => {
 
 $(document).ready(() => {
 
-  //loads index with all available content for specific user
+  //loads index with all available content for specific user - function in helpers.js
   loadCategory('.category-movies');
   loadCategory('.category-restaurants');
   loadCategory('.category-books');
@@ -23,37 +23,27 @@ $(document).ready(() => {
 
   //loads only clicked category(nav bar) - functions in helpers.js
   $("#show-movies").click(() => {
-    console.log('clicked');
     showMovies();
   })
 
   $("#show-restaurants").click(() => {
-    console.log('clicked');
     showRestaurants();
   })
 
   $("#show-books").click(() => {
-    console.log('clicked');
     showBooks();
   })
 
   $("#show-products").click(() => {
-    console.log('clicked');
     showProducts();
   })
 
+  $(".buttons").click((event) => {
+    event.preventDefault()
+    console.log(event);
+  })
 
 });
-
-  //bring whatever is to be used inside the document.ready function
-  // in case we implement the user alerts differently
-  // const alert = function(message) {
-  //   $('.error').slideDown('slow', 'swing', function() {
-  //     $('.error')
-  //       .text(`${message}`)
-  //       .css('visibility', 'visible');
-  //   });
-  // };
 
   //values that might be needed - from $('form')
   // //extract user id for AJAX call
