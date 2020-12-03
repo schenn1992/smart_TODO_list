@@ -1,8 +1,13 @@
 // this is the main nav container
 nav {
+  font-size: 1em;
   background-color: #EAE7DC;
   .collapse button {
     background-color: #E85A4F;
+  }
+  .collapse button:hover {
+    background-color: #E98074;
+    color: white;
   }
 }
 

@@ -1,22 +1,38 @@
 // See: https://sass-lang.com/
 
-body {
+.grey-background {
+  background-color: #EAE7DC;
 
   .main-background {
   font-family: 'Questrial', sans-serif;
   background-color: #EAE7DC;
-  color: #E85A4F;
+  color: #8E8D8A;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+
+  .jumbotron {
+    margin-top: 8em;;
   }
+
   .smart-add {
-    border: 5px dashed purple;
+    margin-top: 15px;
+    background-color: transparent;
+    border: 2px solid #E98074;
+    border-radius: 4px;
+    width: 50%;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 
     .smart-add-box {
-      width: 15em;
+      width: 14em;
       display: flex;
       flex-direction: column;
+      margin-top: 10px;
+      margin-bottom: 20px;
 
       textarea {
         height: 2em;
@@ -32,7 +48,7 @@ body {
         color: black;
         border: 2px solid #E98074;
         border-radius: 4px;
-        width: 50%;
+        width: 25%;
       }
 
       .new-item:hover {
@@ -44,11 +60,12 @@ body {
   }
 
   .main-categories {
-    border: 5px dashed green;
+    border: 2px solid #E98074;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 90%;
 
     div {
       display: flex;
@@ -90,6 +107,12 @@ body {
   .gray-out {
     color: gray;
   }
+
+
+
+  }
+
+
 }
 
 
