@@ -45,11 +45,11 @@ module.exports = (db) => {
 
   const addToBookDatabase = (item) => {
     const queryString = `
-    INSERT INTO books (title, author, rating, synopis)
+    INSERT INTO books (title, author, rating, synopsis)
     VALUES ($1, $2, $3, $4)
     RETURNING *
     `;
-    const values = [item.title, item.author, item.rating, item.synopis];
+    const values = [item.title, item.author, item.rating, item.synopsis];
     return db.query(queryString, values)
       .then(res => {
         console.log(res.rows[0]);
@@ -141,7 +141,6 @@ module.exports = (db) => {
           if (data.title && data.price && data.rating) {
             addToProductDatabase(data)
               .then(() => {
-                // console.log("inside add to db: ", data);
                 // Gets the table length to use as the new product_id
                 getCategoryLength("products")
                   .then(count => {
@@ -178,6 +177,7 @@ module.exports = (db) => {
           if (data) {
             addToBookDatabase(data)
               .then(() => {
+                console.log(data);
                 // Gets the table length to use as the new book_id
                 getCategoryLength("books")
                   .then(count => {
