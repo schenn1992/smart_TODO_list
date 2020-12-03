@@ -189,6 +189,11 @@ module.exports = (db) => {
         });
     }
 
+    if (restaurantSearch(userInput.split(" "))) {
+      const search = removeKeyword(userInput.split(" "), "restaurant");
+      
+    }
+
   });
 
   return router;
