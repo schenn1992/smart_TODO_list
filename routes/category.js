@@ -22,7 +22,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
@@ -106,7 +106,12 @@ module.exports = (db) => {
 
   //edit specific restaurant
   router.post("/restaurants/:id", (req, res) => {
-    res.send(`You want to edit the restaurant ${req.params.id} `);
+    //this goes into the server console log
+    //this is what the server receives from the browser({userInput})
+    console.log(req.body);
+    const restId = req.body.id;
+    res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
+
   })
 
   //edit specific book
