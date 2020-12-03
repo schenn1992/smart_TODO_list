@@ -96,6 +96,7 @@ module.exports = (db) => {
   };
 
   // Post new item
+  // (sorry to whoever has to read this)
   router.post("/", (req, res) => {
     // user input from the smart post form
     const userInput = req.body.text;
@@ -105,6 +106,7 @@ module.exports = (db) => {
     // Checks if doing a movie search
     if (movieSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "movie");
+      // search for the movie through an api
       searchMovie(search)
         .then(movieJSON => {
           // Extract required parameters from API to user's search
@@ -135,8 +137,10 @@ module.exports = (db) => {
         });
     }
 
+    // check if doing a product search
     if (productSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "product");
+      // search for the product through an api
       searchProduct(search)
         .then(productJSON => {
           const results = JSON.parse(productJSON);
@@ -172,8 +176,10 @@ module.exports = (db) => {
         });
     }
 
+    // check if doing a book search
     if (bookSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "book");
+      // searches for book through an api
       searchBook(search)
         .then(bookJSON => {
           const result = JSON.parse(bookJSON);
@@ -185,6 +191,7 @@ module.exports = (db) => {
           const data = { title, author, rating, synopsis };
 
           if (data) {
+            // adds search to book database
             addToBookDatabase(data)
               .then(() => {
                 // Gets the table length to use as the new book_id
@@ -206,13 +213,16 @@ module.exports = (db) => {
     }
 
     if (restaurantSearch(userInput.split(" "))) {
+      // fetch ip of user
       fetchMyIP()
         .then(body => {
+          // fetch longitude and latitude of user
           fetchCoordsByIP(body)
             .then(coordinates => {
               const { lat, lon } = JSON.parse(coordinates);
               const coords = { lat, lon };
               const search = removeKeyword(userInput.split(" "), "restaurant");
+              // search for restaurant near user using an api
               // API not configured to search for restaurants with multiple words
               searchRestaurant(search, coords)
                 .then(restaurantJSON => {
@@ -231,6 +241,7 @@ module.exports = (db) => {
                   };
 
                   if (data) {
+                    // add user's search to database
                     addToRestaurantDatabase(data)
                       .then(() => {
                         // Gets the table length to use as the new restaurant_id
