@@ -101,7 +101,7 @@ module.exports = (db) => {
   //edit specific movie
   router.post("/movies/:id", (req, res) => {
     //req params gets id from link
-    res.send(`You want to edit the movie ${req.params.id} `);
+    res.send(`You want to edit the movie ${req.params.id}, the input is`);
   })
 
   //edit specific restaurant

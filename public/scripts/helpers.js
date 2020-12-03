@@ -109,7 +109,14 @@ const createCategoryDisplay = function(queryResult, category) {
           .text('Edit')
           .click(() => {
             $.post(`category/restaurants/${id}`) //{title: user input}) - second argument
-              .then((response) => {console.log(response)})
+              .then((response) => {
+                response = "response";
+                console.log(response)
+
+
+              })
+
+
           });
 
         //need to implement AJAX delete call

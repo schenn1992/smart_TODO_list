@@ -144,49 +144,6 @@ module.exports = (db) => {
         })
     }
 
-    //checks if doing a restaurant search(not implemented, Natalia is working on it)
-    if (restaurantSearch(userInput.split(" "))) {
-
-      const search = removeKeyword(userInput.split(" "), "restaurant");
-
-      searchRestaurant(search)
-
-
-        .then(productJSON => {
-          const results = JSON.parse(productJSON);
-          // extract the first product
-          const description = results.products[0];
-          const title = description.title;
-          const price = description.price["current_price"] * 100;
-          const rating = description.reviews.rating;
-          const data = { title, price, rating };
-
-          // Stretch: add url to the product list
-          // console.log("URL: ", description.url);
-
-          // Check if the API returns a title, rating, and price
-          if (data.title && data.price && data.rating) {
-            addToProductDatabase(data)
-              .then(() => {
-                // console.log("inside add to db: ", data);
-                // Gets the table length to use as the new movies_id
-                getCategoryLength("products")
-                  .then(count => {
-                    const productId = Number(count);
-                    // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
-                      .then(() => res.redirect("/"))
-                      .catch(e => res.send(`Many to many table error`));
-                  })
-                .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
-              })
-              .catch(e => res.send("Invalid product, try again"));
-          } else {
-            return res.status(400).send("Cannot add item, try a different search!");
-          }
-        })
-    }
-
   });
 
   return router;
