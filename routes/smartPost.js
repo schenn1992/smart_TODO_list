@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const request = require('request-promise-native');
 
 const {
   movieSearch,
@@ -9,7 +10,10 @@ const {
   removeKeyword,
   searchMovie,
   searchProduct,
-  searchBook
+  searchBook,
+  searchRestaurant,
+  fetchMyIP,
+  fetchCoordsByIP
 } = require('../lib/helpers');
 
 module.exports = (db) => {
@@ -53,6 +57,18 @@ module.exports = (db) => {
     return db.query(queryString, values)
       .then(res => res.rows[0])
       .catch(e => res.send(`Adding to books database error: ${e}`));
+  };
+
+  const addToRestaurantDatabase = (item) => {
+    const queryString = `
+    INSERT INTO restaurants (name, rating, country, street, city, province, post_code)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *
+    `;
+    const values = [item.name, item.rating, item.country, item.street, item.city, item.province, item.post_code];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(`Adding to restaurants database error: ${e}`));
   };
 
   // add user id and category id to the users and categories many to many table
@@ -190,8 +206,52 @@ module.exports = (db) => {
     }
 
     if (restaurantSearch(userInput.split(" "))) {
-      const search = removeKeyword(userInput.split(" "), "restaurant");
-      
+      fetchMyIP()
+        .then(body => {
+          fetchCoordsByIP(body)
+            .then(coordinates => {
+              const { lat, lon } = JSON.parse(coordinates);
+              const coords = { lat, lon };
+              const search = removeKeyword(userInput.split(" "), "restaurant");
+              // API not configured to search for restaurants with multiple words
+              searchRestaurant(search, coords)
+                .then(restaurantJSON => {
+                  const result = JSON.parse(restaurantJSON).restaurants[0].restaurant;
+                  // console.log(result);
+                  const data = {
+                    name: result.name,
+                    street: result.location.address,
+                    //city: result.location.city,
+                    //post_code: result.location.zipcode,
+                    city: '',
+                    post_code: '',
+                    rating: result.user_rating.aggregate_rating,
+                    country: '',
+                    province: ''
+                  };
+
+                  if (data) {
+                    addToRestaurantDatabase(data)
+                      .then(() => {
+                        // Gets the table length to use as the new restaurant_id
+                        getCategoryLength("restaurants")
+                          .then(count => {
+                            const restaurantId = Number(count);
+                            // Adds the users.id and restaurant.id to the many to many table
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
+                          })
+                          .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
+                      })
+                      .catch(e => res.send("Invalid restaurant, try again"));
+                  } else {
+                    return res.status(400).send("Cannot add item, try a different search!");
+                  }
+
+                });
+            })
+        })
     }
 
   });
