@@ -56,20 +56,10 @@ const createCategoryDisplay = function(queryResult, category) {
               console.log(`Edit button clicked for movie ${id}`)
           });
 
-        //delete button will work its magic through AJAX delete call (once I figure out how to do that)
-        const deleteButton =
-        $('<button type="button" class="delete-button">')
-          .text('Delete')
-          .click(() => {
-            $.ajax({url: `category/movies/${id}`, method: "DELETE"})
-              .then((response) => {console.log(response)})
-          });
-
         //put all HTML elements together
         header.append(title);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
-        buttonsContainer.append(deleteButton);
         header.append(buttonsContainer);
         item.append(header);
         item.append(rating);
@@ -114,13 +104,9 @@ const createCategoryDisplay = function(queryResult, category) {
             console.log(`Edit button clicked for restaurant ${id}`)
           });
 
-        //need to implement AJAX delete call
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
-
         header.append(name);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
-        buttonsContainer.append(deleteButton);
         header.append(buttonsContainer);
         item.append(header);
         item.append(rating);
@@ -165,14 +151,10 @@ const createCategoryDisplay = function(queryResult, category) {
               console.log(`Edit button clicked for book ${id}`)
           });
 
-        //need to implement AJAX delete call
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
-
 
         header.append(title);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
-        buttonsContainer.append(deleteButton);
         header.append(buttonsContainer);
         item.append(header);
         item.append(rating);
@@ -217,13 +199,9 @@ const createCategoryDisplay = function(queryResult, category) {
                 console.log(`Edit button clicked for product ${id}`)
           });
 
-        //need to implement AJAX delete call
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
-
         header.append(name);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
-        buttonsContainer.append(deleteButton);
         header.append(buttonsContainer);
         item.append(header);
         item.append(rating);
