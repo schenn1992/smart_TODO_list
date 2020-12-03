@@ -1,10 +1,18 @@
 // See: https://sass-lang.com/
 
-body {
-  border: 5px dashed yellow;
-  .main-background {
-    font-family: 'Questrial', sans-serif;
+.grey-background {
+  background-color: #EAE7DC;
 
+  .main-background {
+  font-family: 'Questrial', sans-serif;
+  background-color: #EAE7DC;
+  color: #8E8D8A;
+  display: flex;
+  flex-direction:column;
+  align-items: center;
+
+  .jumbotron {
+    margin-top: 8em;;
   }
 
   h1 {
@@ -19,35 +27,56 @@ body {
   }
 
   .smart-add {
-    border: 5px dashed purple;
+    margin-top: 15px;
+    background-color: transparent;
+    border: 2px solid #E98074;
+    border-radius: 4px;
+    width: 50%;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
 
     .smart-add-box {
-      border: 5px dashed blue;
-      width: 300px;
-      display:flex;
+      width: 14em;
+      display: flex;
       flex-direction: column;
-      align-items: center;
+      margin-top: 10px;
+      margin-bottom: 20px;
+
       textarea {
-        width: 5em;
-        border-bottom: 1px solid black;
+        height: 2em;
+        width: 14em;
+        border-style: hidden;
+        border-bottom: 2px solid black;
         background-color: transparent;
         resize: none;
       }
 
+      .new-item {
+        background-color: transparent;
+        color: black;
+        border: 2px solid #E98074;
+        border-radius: 4px;
+        width: 25%;
+      }
 
+      .new-item:hover {
+        background-color: #E98074;
+        color: white;
+      }
     }
 
   }
 
   .main-categories {
-    border: 5px dashed green;
+    border: 2px solid #E98074;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    width: 90%;
 
     div {
       display: flex;
@@ -58,7 +87,6 @@ body {
       padding: 1em;
       width: 100%;
     }
-
 
     article {
       border: 1px solid black;
@@ -90,6 +118,12 @@ body {
   .gray-out {
     color: gray;
   }
+
+
+
+  }
+
+
 }
 
 

@@ -1,14 +1,22 @@
-body {
-  border: 5px dashed green;
+.grey-background {
+  background-color: #EAE7DC;
   .main-register {
-    font-family: 'Forum', cursive;
-    border: 4px solid blue;
-    border-radius: 15px;
+    font-family: 'Questrial', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #E98074;
+    border-radius: 2px;
+    margin: 5em auto;
+    color: #8E8D8A;
+    width: 30em;
+
 
     h1 {
       display: flex;
       justify-content: center;
-      border: 5px dashed purple;
+      margin-top: 10px;
+      margin-bottom: 20px;
     }
 
     .form {
@@ -16,18 +24,37 @@ body {
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      border: 5px dashed yellow;
 
+      input {
+        background-color: transparent;
+
+      }
+
+      .signup-submit{
+        margin-top: 15px;
+        background-color: transparent;
+        color: black;
+        border: 2px solid #E98074;
+        border-radius: 4px;
+        width: 50%;
+      }
+
+      .signup-submit:hover {
+        background-color: #E98074;
+        color: white;
+      }
+
+      h4 {
+        margin-top: 10px;
+        margin-bottom: 20px;
+        a {
+        color:#E85A4F;
+        }
+      }
 
     }
 
-    .form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
 
-    }
 
   }
 

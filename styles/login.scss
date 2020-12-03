@@ -1,37 +1,55 @@
-body {
+.grey-background {
 
+  background-color: #EAE7DC;
+  .login-background {
+    .main-login {
+      font-family: 'Questrial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid #E98074;
+      border-radius: 2px;
+      margin: 5em auto;
+      color: #8E8D8A;
+      width: 30em;
 
+      .login-title {
+        margin-top: 10px;;
+        margin-bottom: 20px;
 
-  .main-login {
-    font-family: 'Forum', cursive;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 5px dashed yellow;
-    margin: auto;
+      }
 
-    .login-title {
-      margin-top: 10px;;
-      margin-bottom: 20px;
+      .email-password-container {
+        margin-bottom: 15px;
 
+        form {
+          display: flex;
+          flex-direction: column;
 
-    }
-    .email-password-container {
-      margin-bottom: 15px;
+          .login-submit{
+            margin-top: 15px;
+            background-color: transparent;
+            color: black;
+            border: 2px solid #E98074;
+            border-radius: 4px;
+            width: 50%;
+          }
 
-      form {
-        display: flex;
-        flex-direction: column;
-
-        .login-button {
-          margin-top: 15px;
+          .login-submit:hover {
+            background-color: #E98074;
+            color: white;
+          }
         }
       }
 
-    }
+      h4 {
+        margin-top: 10px;
+        margin-bottom: 20px;
 
-    h4 {
-      margin-top: 5px;
+        a {
+          color:#E85A4F;
+        }
+      }
     }
   }
 }
