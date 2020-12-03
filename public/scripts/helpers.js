@@ -4,7 +4,7 @@
 const createCategoryDisplay = function(queryResult, category) {
 
   let itemsCount = 0;
-  const item = $(`<article>`);
+  const categoryContainer = $(`${category}`);
 
   if(queryResult.length !== 0) {
     itemsCount += queryResult.length;
@@ -16,10 +16,15 @@ const createCategoryDisplay = function(queryResult, category) {
 
   switch(category) {
     case '.category-movies':
-      item.append('<h2>Movies</h2>');
-      item.append(itemCounter);
+    {
+      categoryContainer.append('<h2>Movies</h2>');
+      categoryContainer.append(itemCounter);
+      let movieId = 0;
 
       for(const object of queryResult) {
+        const item = $(`<article id="movie-${movieId}">`)
+        const myId = "#movie-" + `${movieId}`
+
         //needed to communicate to back-end
         const id = object.id;
 
@@ -34,7 +39,12 @@ const createCategoryDisplay = function(queryResult, category) {
         const doneButton =
         $('<button type="input" class="done-button">')
           .text('Done')
-          .click(() => {console.log('Done clicked')});
+          .click(() => {
+            console.log('Done clicked on ', myId);
+            //$(`#movie-${movieId}`).addClass("gray-out");
+            $(`${myId}`).addClass("gray-out");
+
+          });
 
         //edit button works its magic via AJAX post call
         const editButton =
@@ -63,14 +73,22 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(header);
         item.append(rating);
         item.append(synopsis);
+        categoryContainer.append(item);
+        movieId ++;
       }
+    }
       break;
 
     case '.category-restaurants':
-      item.append('<h2>Restaurants</h2>');
-      item.append(itemCounter);
+    {
+      categoryContainer.append('<h2>Restaurants</h2>');
+      categoryContainer.append(itemCounter);
+      let restaurantId = 0;
 
       for(const object of queryResult) {
+        const item = $(`<article id=restaurant-${restaurantId}>`)
+        const myId = "#restaurant-" + `${restaurantId}`
+
         const id = object.id;
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}, ${id}`);
@@ -81,7 +99,10 @@ const createCategoryDisplay = function(queryResult, category) {
         const doneButton =
         $('<button type="input" class="done-button">')
           .text('Done')
-          .click(() => {console.log('Done clicked')});
+          .click(() => {
+            console.log('Done clicked')
+            $(`${myId}`).addClass("gray-out");
+          });
 
         const editButton =
         $('<button type="button" class="edit-button">')
@@ -102,14 +123,22 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(header);
         item.append(rating);
         item.append(address);
+        categoryContainer.append(item);
+        restaurantId ++;
       }
+    }
       break;
 
     case '.category-books':
-      item.append('<h2>Books</h2>');
-      item.append(itemCounter);
+    {
+      categoryContainer.append('<h2>Books</h2>');
+      categoryContainer.append(itemCounter);
+      let bookId = 0;
 
       for(const object of queryResult) {
+        const item = $(`<article id=book-${bookId}>`)
+        const myId = "#book-" + `${bookId}`
+
         const id = object.id;
         const header = $('<header>');
         const title = $('<h3>').text(`${object.title}, ${id}`);
@@ -120,7 +149,10 @@ const createCategoryDisplay = function(queryResult, category) {
         const doneButton =
         $('<button type="input" class="done-button">')
           .text('Done')
-          .click(() => {console.log('Done clicked')});
+          .click(() => {
+            console.log('Done clicked')
+            $(`${myId}`).addClass("gray-out");
+          });
 
         const editButton =
         $('<button type="button" class="edit-button">')
@@ -142,14 +174,22 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(header);
         item.append(rating);
         item.append(synopsis);
+        categoryContainer.append(item);
+        bookId ++;
       }
+    }
       break;
 
     case '.category-products':
-      item.append('<h2>Products</h2>');
-      item.append(itemCounter);
+    {
+      categoryContainer.append('<h2>Products</h2>');
+      categoryContainer.append(itemCounter);
+      let productId = 0;
 
       for(const object of queryResult) {
+        const item = $(`<article id=product-${productId}>`)
+        const myId = "#product-" + `${productId}`
+
         const id = object.id;
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}, ${id}`);
@@ -160,7 +200,10 @@ const createCategoryDisplay = function(queryResult, category) {
         const doneButton =
         $('<button type="input" class="done-button">')
           .text('Done')
-          .click(() => {console.log('Done clicked')});
+          .click(() => {
+            console.log('Done clicked')
+            $(`${myId}`).addClass("gray-out");
+          });
 
         const editButton =
         $('<button type="button" class="edit-button">')
@@ -181,10 +224,13 @@ const createCategoryDisplay = function(queryResult, category) {
         item.append(header);
         item.append(rating);
         item.append(price);
+        categoryContainer.append(item);
+        productId ++;
       }
+    }
       break;
   }
-  return item;
+  return categoryContainer;
 }
 
 //loads all existing content for specific user

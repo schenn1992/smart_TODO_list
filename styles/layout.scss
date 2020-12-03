@@ -16,6 +16,7 @@ body {
 
     div {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       margin-top: 1em;
@@ -48,6 +49,10 @@ body {
         justify-content: flex-end;
       }
     }
+  }
+
+  .gray-out {
+    color: gray;
   }
 }
 
