@@ -41,15 +41,16 @@ body {
     justify-content: center;
     align-items: center;
 
-
     div {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       margin-top: 1em;
       padding: 1em;
       width: 100%;
     }
+
 
     article {
       border: 1px solid black;
@@ -58,6 +59,10 @@ body {
 
       h2 {
         border-bottom: 1px solid black;
+      }
+
+      .items-count {
+        text-align: right;
       }
 
       header {
@@ -72,6 +77,10 @@ body {
         justify-content: flex-end;
       }
     }
+  }
+
+  .gray-out {
+    color: gray;
   }
 }
 

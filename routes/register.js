@@ -21,12 +21,13 @@ module.exports = (db) => {
   // Get register page
   router.get("/", (req, res) => {
    // Set the user id with the id in the database
-    getUserId(req.session["user_id"]).then(user_id => {
-      const templateVars = {
-        user: user_id
-      };
+   console.log("user id from GET: ", req.session["user_id"]);
+    getUserId(req.session["user_id"])
+      .then(user_id => {
+        const templateVars = {
+          user: user_id
+        };
       return res.render("register", templateVars);
-
     });
   });
 
