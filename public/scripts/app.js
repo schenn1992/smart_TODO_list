@@ -38,6 +38,28 @@ $(document).ready(() => {
     showProducts();
   })
 
+  $('.modalInput').submit(function(event) {
+    // event.preventDefault();
+
+    //extract user inputs to update db
+    const formInput = $(this).serializeArray();
+    console.log('formInput :', formInput);
+    const id = formInput[0].value;
+    const name = formInput[1].value;
+    const category = formInput[2].value;
+
+    //this posts to the server route via the second param=req.body
+    $.post(`category/restaurants/${id}`, {id, name, category})
+    .then((response) => {
+      //this goes into the browser console log - comes from the server(res.send)
+      //this is what the browser will display on the page
+      console.log(response)
+
+    })
+  })
+
+
+
 });
 
   //values that might be needed - from $('form')

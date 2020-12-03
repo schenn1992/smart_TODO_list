@@ -105,18 +105,12 @@ const createCategoryDisplay = function(queryResult, category) {
           });
 
         const editButton =
-        $('<button type="button" class="edit-button">')
+        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#restaurantsModal">')
           .text('Edit')
           .click(() => {
-            $.post(`category/restaurants/${id}`) //{title: user input}) - second argument
-              .then((response) => {
-                response = "response";
-                console.log(response)
-
-
-              })
-
-
+            $('#restaurantsModal .item-name').val(object.name)
+            $('#item-id').val(id);
+            console.log(`edit button clicked for restaurant ${id}`)
           });
 
         //need to implement AJAX delete call
