@@ -79,7 +79,9 @@ module.exports = (db) => {
               return res.redirect("/");
             })
         });
+
   });
 
   return router;
 };
+
