@@ -33,17 +33,18 @@
   <div class="main-background">
     <% if (!user) { %>
       <div class="jumbotron">
-        <h1 class="display-4">Welcome to AppName</h1>
-        <p class="lead">This is a webApp that can save your time</p>
+
+        <h1 class="display-4">Make Smart Choices</h1>
+        <p class="lead">The Web App can save your day</p>
       </div>
     <% } else { %>
 
     <!-- Smart Add Section -->
     <div class="smart-add">
       <div class="smart-add-box">
-      <h2>Add New Item</h2>
+      <h2><strong>Add New Item</strong></h2>
           <form class="add-item" action="/add" method="POST">
-            <textarea name="text" id="item-text" placeholder="Smart search">
+            <textarea name="text" id="item-text" placeholder="Enter your search">
             </textarea>
             <div class="submit-item">
               <button type="submit" class="new-item">Add</button>

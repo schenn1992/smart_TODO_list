@@ -1,14 +1,11 @@
 // See: https://sass-lang.com/
 
 body {
-  border: 5px dashed yellow;
+
   .main-background {
-    font-family: 'Questrial', sans-serif;
-
-  }
-
-  h1 {
-    color: #244751;
+  font-family: 'Questrial', sans-serif;
+  background-color: #EAE7DC;
+  color: #E85A4F;
   }
   .smart-add {
     border: 5px dashed purple;
@@ -17,19 +14,31 @@ body {
     justify-content: center;
 
     .smart-add-box {
-      border: 5px dashed blue;
-      width: 300px;
-      display:flex;
+      width: 15em;
+      display: flex;
       flex-direction: column;
-      align-items: center;
+
       textarea {
-        width: 5em;
-        border-bottom: 1px solid black;
+        height: 2em;
+        width: 14em;
+        border-style: hidden;
+        border-bottom: 2px solid black;
         background-color: transparent;
         resize: none;
       }
 
+      .new-item {
+        background-color: transparent;
+        color: black;
+        border: 2px solid #E98074;
+        border-radius: 4px;
+        width: 50%;
+      }
 
+      .new-item:hover {
+        background-color: #E98074;
+        color: white;
+      }
     }
 
   }
@@ -50,7 +59,6 @@ body {
       padding: 1em;
       width: 100%;
     }
-
 
     article {
       border: 1px solid black;
