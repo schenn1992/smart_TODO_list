@@ -13,9 +13,7 @@
 
     <!-- GOOGLE FONT  -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
 
 
 
@@ -27,16 +25,20 @@
     <%- include("partials/_header") %>
     <main style="margin: 1em;" class="main-login">
       <div class="login-title">
-          <h3>Login</h3>
+          <h1>Login</h1>
           <h4>Enter your details below to continue</h4>
       </div>
-      <div class="email-password">
+      <div class="email-password-container">
         <form action="/login" method="POST">
-          <h5>Email address</h5>
-          <input type="email" name="email" placeholder="Enter email">
-          <h5>Password</h5>
-          <input type="password" name="password" placeholder="Password">
-          <button type="submit">Login</button>
+          <div class="email-password">
+            <h5>Email address</h5>
+            <input type="email" name="email" placeholder="Enter email">
+            <h5>Password</h5>
+            <input type="password" name="password" placeholder="Password">
+          </div>
+          <div class="login-button">
+            <input type="submit" name="submit" value="Login">
+          </div>
         </form>
       </div>
       <h4>Don't have an account? <a href="/register">Register Here</a></h4>

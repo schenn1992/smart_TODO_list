@@ -74,12 +74,13 @@ module.exports = (db) => {
           // Adds the user to the database
         addUser(user)
             .then(user => {
-              const templateVars = {user: user}
-              res.render("index", templateVars);
+              req.session.user_id = user.id;
               return res.redirect("/");
             })
         });
+
   });
 
   return router;
 };
+

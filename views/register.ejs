@@ -12,7 +12,7 @@
 
     <!-- GOOGLE FONT  -->
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Yellowtail&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Forum&display=swap" rel="stylesheet">
 
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
@@ -20,14 +20,24 @@
 
   <body>
     <%- include("partials/_header") %>
-    <h1>Create Account</h1>
-    <div class="form">
-      <form action="/register" method="POST">
-        <input type="username" name="username" placeholder="Enter username">
-        <input type="email" name="email" placeholder="Enter email">
-        <input type="password" name="password" placeholder="Enter Password">
-        <input type="submit" name="submit" value="Register">
-      </form>
+    <div class="main-register">
+      <h1>Register Your Account</h1>
+      <div class="form">
+        <form action="/register" method="POST">
+          <div>
+            <h5>Username</h5>
+            <input type="username" name="username" placeholder="Enter username">
+            <h5>Email address</h5>
+            <input type="email" name="email" placeholder="Enter email">
+            <h5>Password</h5>
+            <input type="password" name="password" placeholder="Enter Password">
+          </div>
+          <div>
+            <input type="submit" name="submit" value="Sign Up">
+          </div>
+        </form>
+        <h4>Already have an account? <a href="/login">Login Here</a></h4>
+      </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
