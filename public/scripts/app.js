@@ -38,11 +38,6 @@ $(document).ready(() => {
     showProducts();
   })
 
-  $(".buttons").click((event) => {
-    event.preventDefault()
-    console.log(event);
-  })
-
 });
 
   //values that might be needed - from $('form')

@@ -1,5 +1,6 @@
 //takes in query result from route and category
 //builds content to display within specific category
+
 const createCategoryDisplay = function(queryResult, category) {
 
   let itemsCount = 0;
@@ -19,15 +20,41 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append(itemCounter);
 
       for(const object of queryResult) {
+        //needed to communicate to back-end
+        const id = object.id;
+
+        //create elements of category item
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}`);
-        const buttonsContainer = $('<form class="buttons">');
-        const doneButton = $('<button type="input" class="done-button">').text('Done');
-        const editButton = $('<button type="button" class="edit-button">').text('Edit');
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
+        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<p>').text(`${object.synopsis}`);
 
+        //done button works its magic via CSS class '.gray-out'
+        const doneButton =
+        $('<button type="input" class="done-button">')
+          .text('Done')
+          .click(() => {console.log('Done clicked')});
+
+        //edit button works its magic via AJAX post call
+        const editButton =
+        $('<button type="button" class="edit-button">')
+          .text('Edit')
+          .click(() => {
+            $.post(`category/movies/${id}`) //{title: user input}) - second argument
+              .then((response) => {console.log(response)})
+          });
+
+        //delete button will work its magic through AJAX delete call (once I figure out how to do that)
+        const deleteButton =
+        $('<button type="button" class="delete-button">')
+          .text('Delete')
+          .click(() => {
+            $.ajax({url: `category/movies/${id}`, method: "DELETE"})
+              .then((response) => {console.log(response)})
+          });
+
+        //put all HTML elements together
         header.append(title);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
@@ -44,14 +71,28 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append(itemCounter);
 
       for(const object of queryResult) {
+        const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}`);
-        const buttonsContainer = $('<form class="buttons">');
-        const doneButton = $('<button type="button" class="done-button">').text('Done');
-        const editButton = $('<button type="button" class="edit-button">').text('Edit');
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
+        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
+
+        const doneButton =
+        $('<button type="input" class="done-button">')
+          .text('Done')
+          .click(() => {console.log('Done clicked')});
+
+        const editButton =
+        $('<button type="button" class="edit-button">')
+          .text('Edit')
+          .click(() => {
+            $.post(`category/restaurants/${id}`) //{title: user input}) - second argument
+              .then((response) => {console.log(response)})
+          });
+
+        //need to implement AJAX delete call
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
 
         header.append(name);
         buttonsContainer.append(doneButton);
@@ -69,14 +110,29 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append(itemCounter);
 
       for(const object of queryResult) {
+        const id = object.id;
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}`);
-        const buttonsContainer = $('<form class="buttons">');
-        const doneButton = $('<button type="button" class="done-button">').text('Done');
-        const editButton = $('<button type="button" class="edit-button">').text('Edit');
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
+        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<h6>').text(`${object.synopsis}`);
+
+        const doneButton =
+        $('<button type="input" class="done-button">')
+          .text('Done')
+          .click(() => {console.log('Done clicked')});
+
+        const editButton =
+        $('<button type="button" class="edit-button">')
+          .text('Edit')
+          .click(() => {
+            $.post(`category/books/${id}`) //{title: user input}) - second argument
+              .then((response) => {console.log(response)})
+          });
+
+        //need to implement AJAX delete call
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
+
 
         header.append(title);
         buttonsContainer.append(doneButton);
@@ -94,14 +150,28 @@ const createCategoryDisplay = function(queryResult, category) {
       item.append(itemCounter);
 
       for(const object of queryResult) {
+        const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}`);
-        const buttonsContainer = $('<form class="buttons">');
-        const doneButton = $('<button type="button" class="done-button">').text('Done');
-        const editButton = $('<button type="button" class="edit-button">').text('Edit');
-        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
+        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const price = $('<h6>').text(`Price: $${object.price /100}`);
+
+        const doneButton =
+        $('<button type="input" class="done-button">')
+          .text('Done')
+          .click(() => {console.log('Done clicked')});
+
+        const editButton =
+        $('<button type="button" class="edit-button">')
+          .text('Edit')
+          .click(() => {
+            $.post(`category/products/${id}`) //{title: user input}) - second argument
+              .then((response) => {console.log(response)})
+          });
+
+        //need to implement AJAX delete call
+        const deleteButton = $('<button type="button" class="delete-button">').text('Delete');
 
         header.append(name);
         buttonsContainer.append(doneButton);
