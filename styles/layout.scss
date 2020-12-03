@@ -10,6 +10,14 @@ body {
   h1 {
     color: #244751;
   }
+
+  .modal-notify .modal-header {
+    border-radius: 3px 3px 0 0;
+  }
+  .modal-notify .modal-content {
+    border-radius: 3px;
+  }
+
   .smart-add {
     border: 5px dashed purple;
     display: flex;
