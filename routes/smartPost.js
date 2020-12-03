@@ -8,7 +8,8 @@ const {
   productSearch,
   removeKeyword,
   searchMovie,
-  searchProduct
+  searchProduct,
+  searchBook
 } = require('../lib/helpers');
 
 module.exports = (db) => {
@@ -40,6 +41,21 @@ module.exports = (db) => {
     return db.query(queryString, values)
       .then(res => res.rows[0])
       .catch(e => res.send(`Adding to product database error: ${e}`));
+  }
+
+  const addToBookDatabase = (item) => {
+    const queryString = `
+    INSERT INTO books (title, author, rating, synopis)
+    VALUES ($1, $2, $3, $4)
+    RETURNING *
+    `;
+    const values = [item.title, item.author, item.rating, item.synopis];
+    return db.query(queryString, values)
+      .then(res => {
+        console.log(res.rows[0]);
+        return res.rows[0]
+      })
+      .catch(e => res.send(`Adding to books database error: ${e}`));
   }
 
   // add user id and category id to the users and categories many to many table
@@ -126,7 +142,7 @@ module.exports = (db) => {
             addToProductDatabase(data)
               .then(() => {
                 // console.log("inside add to db: ", data);
-                // Gets the table length to use as the new movies_id
+                // Gets the table length to use as the new product_id
                 getCategoryLength("products")
                   .then(count => {
                     const productId = Number(count);
@@ -138,6 +154,42 @@ module.exports = (db) => {
                 .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
               .catch(e => res.send("Invalid product, try again"));
+          } else {
+            return res.status(400).send("Cannot add item, try a different search!");
+          }
+        })
+    }
+
+    if (bookSearch(userInput.split(" "))) {
+      const search = removeKeyword(userInput.split(" "), "book");
+      searchBook(search)
+        .then(bookJSON => {
+          const result = JSON.parse(bookJSON);
+          const description = result.products[0];
+          // console.log(description);
+          const title = description.title;
+          const price = description.price["current_price"] * 100;
+          const rating = description.reviews.rating;
+          const author = "Author";
+          const synopsis = "Synopsis";
+          const data = { title, author, rating, synopsis };
+          // console.log(data);
+
+          if (data) {
+            addToBookDatabase(data)
+              .then(() => {
+                // Gets the table length to use as the new book_id
+                getCategoryLength("books")
+                  .then(count => {
+                    const bookId = Number(count);
+                    // Adds the users.id and products.id to the many to many table
+                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
+                  })
+                .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
+              })
+              .catch(e => res.send("Invalid book, try again"));
           } else {
             return res.status(400).send("Cannot add item, try a different search!");
           }
