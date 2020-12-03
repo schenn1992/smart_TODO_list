@@ -1,5 +1,6 @@
 const express = require('express');
 const router  = express.Router();
+const request = require('request-promise-native');
 
 const {
   movieSearch,
@@ -9,7 +10,10 @@ const {
   removeKeyword,
   searchMovie,
   searchProduct,
-  searchBook
+  searchBook,
+  searchRestaurant,
+  fetchMyIP,
+  fetchCoordsByIP
 } = require('../lib/helpers');
 
 module.exports = (db) => {
@@ -55,6 +59,18 @@ module.exports = (db) => {
       .catch(e => res.send(`Adding to books database error: ${e}`));
   };
 
+  const addToRestaurantDatabase = (item) => {
+    const queryString = `
+    INSERT INTO restaurants (name, rating, country, street, city, province, post_code)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING *
+    `;
+    const values = [item.name, item.rating, item.country, item.street, item.city, item.province, item.post_code];
+    return db.query(queryString, values)
+      .then(res => res.rows[0])
+      .catch(e => res.send(`Adding to restaurants database error: ${e}`));
+  };
+
   // add user id and category id to the users and categories many to many table
   const addToUsersAndCategoriesDatabase = (category, userId, itemId) => {
     const queryString = `
@@ -80,6 +96,7 @@ module.exports = (db) => {
   };
 
   // Post new item
+  // (sorry to whoever has to read this)
   router.post("/", (req, res) => {
     // user input from the smart post form
     const userInput = req.body.text;
@@ -89,6 +106,7 @@ module.exports = (db) => {
     // Checks if doing a movie search
     if (movieSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "movie");
+      // search for the movie through an api
       searchMovie(search)
         .then(movieJSON => {
           // Extract required parameters from API to user's search
@@ -119,8 +137,10 @@ module.exports = (db) => {
         });
     }
 
+    // check if doing a product search
     if (productSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "product");
+      // search for the product through an api
       searchProduct(search)
         .then(productJSON => {
           const results = JSON.parse(productJSON);
@@ -156,8 +176,10 @@ module.exports = (db) => {
         });
     }
 
+    // check if doing a book search
     if (bookSearch(userInput.split(" "))) {
       const search = removeKeyword(userInput.split(" "), "book");
+      // searches for book through an api
       searchBook(search)
         .then(bookJSON => {
           const result = JSON.parse(bookJSON);
@@ -169,6 +191,7 @@ module.exports = (db) => {
           const data = { title, author, rating, synopsis };
 
           if (data) {
+            // adds search to book database
             addToBookDatabase(data)
               .then(() => {
                 // Gets the table length to use as the new book_id
@@ -187,6 +210,59 @@ module.exports = (db) => {
             return res.status(400).send("Cannot add item, try a different search!");
           }
         });
+    }
+
+    if (restaurantSearch(userInput.split(" "))) {
+      // fetch ip of user
+      fetchMyIP()
+        .then(body => {
+          // fetch longitude and latitude of user
+          fetchCoordsByIP(body)
+            .then(coordinates => {
+              const { lat, lon } = JSON.parse(coordinates);
+              const coords = { lat, lon };
+              const search = removeKeyword(userInput.split(" "), "restaurant");
+              // search for restaurant near user using an api
+              // API not configured to search for restaurants with multiple words
+              searchRestaurant(search, coords)
+                .then(restaurantJSON => {
+                  const result = JSON.parse(restaurantJSON).restaurants[0].restaurant;
+                  // console.log(result);
+                  const data = {
+                    name: result.name,
+                    street: result.location.address,
+                    //city: result.location.city,
+                    //post_code: result.location.zipcode,
+                    city: '',
+                    post_code: '',
+                    rating: result.user_rating.aggregate_rating,
+                    country: '',
+                    province: ''
+                  };
+
+                  if (data) {
+                    // add user's search to database
+                    addToRestaurantDatabase(data)
+                      .then(() => {
+                        // Gets the table length to use as the new restaurant_id
+                        getCategoryLength("restaurants")
+                          .then(count => {
+                            const restaurantId = Number(count);
+                            // Adds the users.id and restaurant.id to the many to many table
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
+                          })
+                          .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
+                      })
+                      .catch(e => res.send("Invalid restaurant, try again"));
+                  } else {
+                    return res.status(400).send("Cannot add item, try a different search!");
+                  }
+
+                });
+            })
+        })
     }
 
   });

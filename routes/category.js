@@ -22,7 +22,7 @@ module.exports = (db) => {
     const values = [userId];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows);
+        // console.log(res.rows);
         return res.rows;
       })
       .catch(e => res.send(e));
