@@ -78,7 +78,9 @@ app.get("/", (req, res) => {
       })
   }
     getUserById(req.session.user_id).then(user => {
-    const templateVars = {user};
+    const templateVars = {
+      user
+    };
     res.render("index", templateVars);
   });
 
