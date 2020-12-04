@@ -1,5 +1,3 @@
-// const { use } = require("bcrypt/lib/promises");
-// const { helpers } = require('../../lib/helpers')
 
 $(() => {
   $.ajax({
@@ -44,12 +42,21 @@ $(document).ready(() => {
 
     const userInput = getUserInput('#moviesModal');
 
-    $.post(`category/movies/${userInput.id}`, userInput)
-    .then((response) => {
-      //comes from the server(res.send)
-      console.log(response)
-    })
 
+    $.when(
+      $.post(`category/movies/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/movies/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
   $('#restaurantsModal').submit(function(event) {
@@ -57,11 +64,20 @@ $(document).ready(() => {
 
     const userInput = getUserInput('#restaurantsModal');
 
-    $.post(`category/restaurants/${userInput.id}`, userInput)
-    .then((response) => {
-      console.log(response)
-    })
-
+    $.when(
+      $.post(`category/restaurants/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/restaurants/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
   $('#booksModal').submit(function(event) {
@@ -69,10 +85,20 @@ $(document).ready(() => {
 
     const userInput = getUserInput('#booksModal');
 
-    $.post(`category/books/${userInput.id}`, userInput)
-    .then((response) => {
-      console.log(response)
-    })
+    $.when(
+      $.post(`category/books/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/books/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
     $('#productsModal').submit(function(event) {
@@ -80,11 +106,19 @@ $(document).ready(() => {
 
       const userInput = getUserInput('#productsModal');
 
-      $.post(`category/products/${userInput.id}`, userInput)
-      .then((response) => {
-        console.log(response)
-      })
-
+      $.when(
+        $.post(`category/products/${userInput.id}`, userInput)
+          .then((response) => {
+        //comes from the server(res.send)
+        // console.log(response)
+        }),
+        $.ajax({
+          url: `category/products/${userInput.id}`,
+          method: 'DELETE',
+          success: (response) => console.log(response),
+          error: (e) => console.log(e)
+        })
+      )
+      window.location.reload();
   })
-
 });

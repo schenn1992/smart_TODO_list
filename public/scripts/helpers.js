@@ -11,7 +11,7 @@ const createDoneButton = function(itemId) {
 }
 
 const createEditButton = function(modalHTMLId, itemName, itemId) {
-  return $(`<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="${modalHTMLId}">`)
+  return $(`<button type="button" class="edit-button" data-toggle="modal" data-target="${modalHTMLId}">`)
   .text('Edit')
   .click(() => {
       $(`${modalHTMLId} .item-name`).val(itemName)
@@ -48,7 +48,7 @@ const createCategoryDisplay = function(queryResult, category) {
 
         //create elements of category item
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<p>').text(`${object.synopsis}`);
@@ -85,7 +85,7 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
@@ -117,7 +117,7 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<h6>').text(`${object.synopsis}`);
@@ -149,7 +149,7 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const price = $('<h6>').text(`Price: $${object.price /100}`);
