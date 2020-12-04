@@ -1,6 +1,25 @@
 //takes in query result from route and category
 //builds content to display within specific category
 
+const createDoneButton = function(itemId) {
+  return $('<button type="input" class="done-button">')
+  .text('Done')
+  .click(() => {
+    console.log('Done clicked on ', itemId);
+    $(`${itemId}`).addClass("gray-out");
+  });
+}
+
+const createEditButton = function(modalHTMLId, itemName, itemId) {
+  return $(`<button type="button" class="edit-button" data-toggle="modal" data-target="${modalHTMLId}">`)
+  .text('Edit')
+  .click(() => {
+      $(`${modalHTMLId} .item-name`).val(itemName)
+      $(`${modalHTMLId} .item-id`).val(itemId);
+      console.log(`Edit button clicked for ${modalHTMLId} ${itemId}`)
+  });
+}
+
 const createCategoryDisplay = function(queryResult, category) {
 
   let itemsCount = 0;
@@ -8,7 +27,6 @@ const createCategoryDisplay = function(queryResult, category) {
 
   if(queryResult.length !== 0) {
     itemsCount += queryResult.length;
-
   }
 
   //displays the number of items in each category
@@ -30,31 +48,16 @@ const createCategoryDisplay = function(queryResult, category) {
 
         //create elements of category item
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<p>').text(`${object.synopsis}`);
 
         //done button works its magic via CSS class '.gray-out'
-        const doneButton =
-        $('<button type="input" class="done-button">')
-          .text('Done')
-          .click(() => {
-            console.log('Done clicked on ', myId);
-            //$(`#movie-${movieId}`).addClass("gray-out");
-            $(`${myId}`).addClass("gray-out");
+        const doneButton = createDoneButton(myId);
 
-          });
-
-        //edit button works its magic via a modal popup that sends the info to the backend
-        const editButton =
-        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#moviesModal">')
-          .text('Edit')
-          .click(() => {
-              $('#moviesModal .item-name').val(object.title)
-              $('#moviesModal .item-id').val(id);
-              console.log(`Edit button clicked for movie ${id}`)
-          });
+        //edit button works its magic through a modal popup form
+        const editButton = createEditButton("#moviesModal", object.title, id);
 
         //put all HTML elements together
         header.append(title);
@@ -82,27 +85,12 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
-
-        const doneButton =
-        $('<button type="input" class="done-button">')
-          .text('Done')
-          .click(() => {
-            console.log('Done clicked')
-            $(`${myId}`).addClass("gray-out");
-          });
-
-        const editButton =
-        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#restaurantsModal">')
-          .text('Edit')
-          .click(() => {
-            $('#restaurantsModal .item-name').val(object.name)
-            $('#restaurantsModal .item-id').val(id);
-            console.log(`Edit button clicked for restaurant ${id}`)
-          });
+        const doneButton = createDoneButton(myId);
+        const editButton = createEditButton("#restaurantsModal", object.name, id);
 
         header.append(name);
         buttonsContainer.append(doneButton);
@@ -129,28 +117,12 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<h6>').text(`${object.synopsis}`);
-
-        const doneButton =
-        $('<button type="input" class="done-button">')
-          .text('Done')
-          .click(() => {
-            console.log('Done clicked')
-            $(`${myId}`).addClass("gray-out");
-          });
-
-        const editButton =
-        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#booksModal">')
-          .text('Edit')
-          .click(() => {
-              $('#booksModal .item-name').val(object.title)
-              $('#booksModal .item-id').val(id);
-              console.log(`Edit button clicked for book ${id}`)
-          });
-
+        const doneButton = createDoneButton(myId);
+        const editButton = createEditButton("#booksModal", object.title, id);
 
         header.append(title);
         buttonsContainer.append(doneButton);
@@ -177,27 +149,12 @@ const createCategoryDisplay = function(queryResult, category) {
 
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const price = $('<h6>').text(`Price: $${object.price /100}`);
-
-        const doneButton =
-        $('<button type="input" class="done-button">')
-          .text('Done')
-          .click(() => {
-            console.log('Done clicked')
-            $(`${myId}`).addClass("gray-out");
-          });
-
-        const editButton =
-        $('<button type="button" class="edit-button btn btn-default btn-rounded" data-toggle="modal" data-target="#productsModal">')
-          .text('Edit')
-          .click(() => {
-                $('#productsModal .item-name').val(object.name)
-                $('#productsModal .item-id').val(id);
-                console.log(`Edit button clicked for product ${id}`)
-          });
+        const doneButton = createDoneButton(myId);
+        const editButton = createEditButton("#productsModal", object.name, id);
 
         header.append(name);
         buttonsContainer.append(doneButton);
@@ -279,3 +236,13 @@ const showProducts = function() {
   loadCategory('.category-products');
 };
 
+//get user input from modal form
+const getUserInput = function(modalHTMLId) {
+
+  const formInput = $(`${modalHTMLId} .modalInput`).serializeArray();
+  console.log('formInput :', formInput);
+  const id = formInput[0].value;
+  const name = formInput[1].value;
+  const category = formInput[2].value;
+  return {id, name, category};
+};
