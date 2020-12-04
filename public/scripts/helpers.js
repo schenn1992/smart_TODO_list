@@ -279,3 +279,13 @@ const showProducts = function() {
   loadCategory('.category-products');
 };
 
+//get user input from modal form
+const getUserInput = function(modalHTMLId) {
+
+  const formInput = $(`${modalHTMLId} .modalInput`).serializeArray();
+  console.log('formInput :', formInput);
+  const id = formInput[0].value;
+  const name = formInput[1].value;
+  const category = formInput[2].value;
+  return {id, name, category};
+};
