@@ -1,6 +1,5 @@
 //takes in query result from route and category
 //builds content to display within specific category
-
 const createDoneButton = function(itemId) {
   return $('<button type="input" class="done-button">')
   .text('Done')
@@ -9,7 +8,6 @@ const createDoneButton = function(itemId) {
     $(`${itemId}`).addClass("gray-out");
   });
 }
-
 const createEditButton = function(modalHTMLId, itemName, itemId) {
   return $(`<button type="button" class="edit-button" data-toggle="modal" data-target="${modalHTMLId}">`)
   .text('Edit')
@@ -19,40 +17,31 @@ const createEditButton = function(modalHTMLId, itemName, itemId) {
       console.log(`Edit button clicked for ${modalHTMLId} ${itemId}`)
   });
 }
-
 const createCategoryDisplay = function(queryResult, category) {
-
   let itemsCount = 0;
   const categoryContainer = $(`${category}`);
-
   if(queryResult.length !== 0) {
     itemsCount += queryResult.length;
   }
-
   //displays the number of items in each category
   const itemCounter = $('<p class="items-count">').text(`${itemsCount} items in the category`);
-
   switch(category) {
     case '.category-movies':
     {
       categoryContainer.append('<h2>Movies</h2>');
       categoryContainer.append(itemCounter);
       let movieId = 0;
-
       for(const object of queryResult) {
         const item = $(`<article id="movie-${movieId}">`)
         const myId = "#movie-" + `${movieId}`
-
         //needed to communicate to back-end
         const id = object.id;
-
         //create elements of category item
         const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<p>').text(`${object.synopsis}`);
-
         //done button works its magic via CSS class '.gray-out'
         const doneButton = createDoneButton(myId);
 
@@ -72,17 +61,14 @@ const createCategoryDisplay = function(queryResult, category) {
       }
     }
       break;
-
     case '.category-restaurants':
     {
       categoryContainer.append('<h2>Restaurants</h2>');
       categoryContainer.append(itemCounter);
       let restaurantId = 0;
-
       for(const object of queryResult) {
         const item = $(`<article id=restaurant-${restaurantId}>`)
         const myId = "#restaurant-" + `${restaurantId}`
-
         const id = object.id;
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
@@ -91,7 +77,6 @@ const createCategoryDisplay = function(queryResult, category) {
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
         const doneButton = createDoneButton(myId);
         const editButton = createEditButton("#restaurantsModal", object.name, id);
-
         header.append(name);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
@@ -104,17 +89,14 @@ const createCategoryDisplay = function(queryResult, category) {
       }
     }
       break;
-
     case '.category-books':
     {
       categoryContainer.append('<h2>Books</h2>');
       categoryContainer.append(itemCounter);
       let bookId = 0;
-
       for(const object of queryResult) {
         const item = $(`<article id=book-${bookId}>`)
         const myId = "#book-" + `${bookId}`
-
         const id = object.id;
         const header = $('<header>');
         const title = $('<h3>').text(`${object.title}`);
@@ -123,7 +105,6 @@ const createCategoryDisplay = function(queryResult, category) {
         const synopsis = $('<h6>').text(`${object.synopsis}`);
         const doneButton = createDoneButton(myId);
         const editButton = createEditButton("#booksModal", object.title, id);
-
         header.append(title);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
@@ -136,17 +117,14 @@ const createCategoryDisplay = function(queryResult, category) {
       }
     }
       break;
-
     case '.category-products':
     {
       categoryContainer.append('<h2>Products</h2>');
       categoryContainer.append(itemCounter);
       let productId = 0;
-
       for(const object of queryResult) {
         const item = $(`<article id=product-${productId}>`)
         const myId = "#product-" + `${productId}`
-
         const id = object.id;
         const header = $('<header>');
         const name = $('<h3>').text(`${object.name}`);
@@ -155,7 +133,6 @@ const createCategoryDisplay = function(queryResult, category) {
         const price = $('<h6>').text(`Price: $${object.price /100}`);
         const doneButton = createDoneButton(myId);
         const editButton = createEditButton("#productsModal", object.name, id);
-
         header.append(name);
         buttonsContainer.append(doneButton);
         buttonsContainer.append(editButton);
@@ -171,17 +148,14 @@ const createCategoryDisplay = function(queryResult, category) {
   }
   return categoryContainer;
 }
-
 //loads all existing content for specific user
 const loadCategory = function(category) {
   console.log('AJAX call, loading category');
-
   //makes a request to the /category route, gets back an array of arrays
   $.ajax('/category', {method: 'GET'})
     .then(res => {
       //assign arrays in result to their own separate array
       const [movies, restaurants, books, products] = res;
-
       //object built for use in createCategoryDisplay function call below
       const catArrays = {
         '.category-movies': movies,
@@ -189,16 +163,12 @@ const loadCategory = function(category) {
         '.category-books': books,
         '.category-products': products
       }
-
       $(`${category}`).append(createCategoryDisplay(catArrays[`${category}`], `${category}`))
     })
     .catch(err => console.log(err))
     .always(() => console.log('Ajax call successful'));
-
 };
-
 const categories = ['.category-movies', '.category-restaurants', '.category-books', '.category-products'];
-
 //loops through list of categories and toggles their visibility
 const toggleCategoryDisplay = function(category) {
   for (const item of categories) {
@@ -210,29 +180,21 @@ const toggleCategoryDisplay = function(category) {
     }
   }
 }
-
 //functions to display specific category on nav bar click
 const showMovies = function() {
   toggleCategoryDisplay('.category-movies');
-
   loadCategory('.category-movies');
 };
-
 const showRestaurants = function() {
   toggleCategoryDisplay('.category-restaurants');
-
   loadCategory('.category-restaurants');
 };
-
 const showBooks = function() {
   toggleCategoryDisplay('.category-books');
-
   loadCategory('.category-books');
 };
-
 const showProducts = function() {
   toggleCategoryDisplay('.category-products');
-
   loadCategory('.category-products');
 };
 

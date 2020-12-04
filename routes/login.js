@@ -26,18 +26,15 @@ module.exports = (db) => {
       .then(res => {
         return res.rows[0];
       })
-  }
+  };
 
   router.get("/", (req, res) => {
-    console.log("session: ", req.session);
     if (!req.session.user_id) {
       res.render("login", {user: null})
     } else {
       getUserById(req.session.user_id).then(user => {
-        console.log("user: ", user)
         const templateVars = {user};
         res.render("login", templateVars);
-
       })
     }
   });
@@ -50,29 +47,22 @@ module.exports = (db) => {
     const values = [email];
     return db.query(queryString, values)
       .then(res => {
-        console.log(res.rows[0]);
         return res.rows[0];
       })
-
   };
   // Posts the user's login information and checks to see if it matches with the database
   router.post("/", (req, res) => {
     const {email, password} = req.body;
     getUserByEmail(email).then(user => {
       if (user.email === email) {
-        console.log("email check passed");
         if (bcrypt.compareSync(password, user.password)) {
-          console.log("password check passed");
           req.session.user_id = user.id;
           return res.redirect("/");
         }
       }
       return res.send("403 error. Please enter valid email or password");
-
     });
-
   });
   return router;
-
 }
 //when clicked on Profile, i should be direct to users
