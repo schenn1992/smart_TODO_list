@@ -1,5 +1,3 @@
-// const { use } = require("bcrypt/lib/promises");
-// const { helpers } = require('../../lib/helpers')
 
 $(() => {
   $.ajax({
@@ -38,83 +36,89 @@ $(document).ready(() => {
     showProducts();
   })
 
+  //below: posts to specific items in categories with content coming from modals
   $('#moviesModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
-    //extract user inputs to update db
-    const formInput = $('#moviesModal .modalInput').serializeArray();
-    console.log('formInput :', formInput);
-    const id = formInput[0].value;
-    const name = formInput[1].value;
-    const category = formInput[2].value;
+    const userInput = getUserInput('#moviesModal');
 
-    $.post(`category/movies/${id}`, {id, name, category})
-    .then((response) => {
-      //this goes into the browser console log - comes from the server(res.send)
-      //this is what the browser will display on the page
-      console.log(response)
 
-    })
-
+    $.when(
+      $.post(`category/movies/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/movies/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
   $('#restaurantsModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
-    //extract user inputs to update db
-    const formInput = $('#restaurantsModal .modalInput').serializeArray();
-    console.log('formInput :', formInput);
-    const id = formInput[0].value;
-    const name = formInput[1].value;
-    const category = formInput[2].value;
+    const userInput = getUserInput('#restaurantsModal');
 
-    $.post(`category/restaurants/${id}`, {id, name, category})
-    .then((response) => {
-      //this goes into the browser console log - comes from the server(res.send)
-      //this is what the browser will display on the page
-      console.log(response)
-
-    })
-
+    $.when(
+      $.post(`category/restaurants/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/restaurants/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
   $('#booksModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
-    //extract user inputs to update db
-    const formInput = $('#booksModal .modalInput').serializeArray();
-    console.log('formInput :', formInput);
-    const id = formInput[0].value;
-    const name = formInput[1].value;
-    const category = formInput[2].value;
+    const userInput = getUserInput('#booksModal');
 
-    $.post(`category/books/${id}`, {id, name, category})
-    .then((response) => {
-      //this goes into the browser console log - comes from the server(res.send)
-      //this is what the browser will display on the page
-      console.log(response)
-
-    })
+    $.when(
+      $.post(`category/books/${userInput.id}`, userInput)
+        .then((response) => {
+      //comes from the server(res.send)
+      // console.log(response)
+      }),
+      $.ajax({
+        url: `category/books/${userInput.id}`,
+        method: 'DELETE',
+        success: (response) => console.log(response),
+        error: (e) => console.log(e)
+      })
+    )
+    window.location.reload();
   })
 
     $('#productsModal').submit(function(event) {
-      event.preventDefault();
+      // event.preventDefault();
 
-      //extract user inputs to update db
-      const formInput = $('#productsModal .modalInput').serializeArray();
-      console.log('formInput :', formInput);
-      const id = formInput[0].value;
-      const name = formInput[1].value;
-      const category = formInput[2].value;
+      const userInput = getUserInput('#productsModal');
 
-      $.post(`category/products/${id}`, {id, name, category})
-      .then((response) => {
-        //this goes into the browser console log - comes from the server(res.send)
-        //this is what the browser will display on the page
-        console.log(response)
-
-      })
-
+      $.when(
+        $.post(`category/products/${userInput.id}`, userInput)
+          .then((response) => {
+        //comes from the server(res.send)
+        // console.log(response)
+        }),
+        $.ajax({
+          url: `category/products/${userInput.id}`,
+          method: 'DELETE',
+          success: (response) => console.log(response),
+          error: (e) => console.log(e)
+        })
+      )
+      window.location.reload();
   })
-
 });

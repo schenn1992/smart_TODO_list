@@ -38,14 +38,16 @@ const createCategoryDisplay = function(queryResult, category) {
         const id = object.id;
         //create elements of category item
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<p>').text(`${object.synopsis}`);
         //done button works its magic via CSS class '.gray-out'
         const doneButton = createDoneButton(myId);
+
         //edit button works its magic through a modal popup form
         const editButton = createEditButton("#moviesModal", object.title, id);
+
         //put all HTML elements together
         header.append(title);
         buttonsContainer.append(doneButton);
@@ -69,7 +71,7 @@ const createCategoryDisplay = function(queryResult, category) {
         const myId = "#restaurant-" + `${restaurantId}`
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const address = $('<h6>').text(`${object.street}, ${object.city}, ${object.province}, ${object.post_code}, ${object.country}`);
@@ -97,7 +99,7 @@ const createCategoryDisplay = function(queryResult, category) {
         const myId = "#book-" + `${bookId}`
         const id = object.id;
         const header = $('<header>');
-        const title = $('<h3>').text(`${object.title}, ${id}`);
+        const title = $('<h3>').text(`${object.title}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const synopsis = $('<h6>').text(`${object.synopsis}`);
@@ -125,7 +127,7 @@ const createCategoryDisplay = function(queryResult, category) {
         const myId = "#product-" + `${productId}`
         const id = object.id;
         const header = $('<header>');
-        const name = $('<h3>').text(`${object.name}, ${id}`);
+        const name = $('<h3>').text(`${object.name}`);
         const buttonsContainer = $('<div class="buttons">');
         const rating = $('<h5>').text(`Rating: ${object.rating}`);
         const price = $('<h6>').text(`Price: $${object.price /100}`);
@@ -195,8 +197,10 @@ const showProducts = function() {
   toggleCategoryDisplay('.category-products');
   loadCategory('.category-products');
 };
+
 //get user input from modal form
 const getUserInput = function(modalHTMLId) {
+
   const formInput = $(`${modalHTMLId} .modalInput`).serializeArray();
   console.log('formInput :', formInput);
   const id = formInput[0].value;
