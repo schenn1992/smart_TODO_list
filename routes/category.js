@@ -179,10 +179,22 @@ module.exports = (db) => {
       .catch(e => res.send(e));
   };
 
+  const deleteCategoryItem = (category, itemId) => {
+    const queryString = `
+    DELETE FROM users_${category[0]}
+    WHERE  ${category[1]} = ${itemId}
+    RETURNING *
+    `;
+    return db.query(queryString)
+      .then(res => res.rows)
+      .catch(e => res.send(`Error: ${e}`));
+  }
+
   //edit specific movie
   router.post("/movies/:id", (req, res) => {
     //req params gets id from link
     const search = req.body.name;
+    console.log(req.params);
     const categoryChange = req.body.category.toLowerCase();
     const userId = req.session.user_id;
     const templateVars = { user: userId };
@@ -207,8 +219,12 @@ module.exports = (db) => {
                   .then(count => {
                     const movieId = Number(count);
                     // Adds the users.id and movies.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
-                    .then(() => res.redirect("/"))
+                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], movieId)
+                    // .then(() => {
+                    //   deleteCategoryItem(["movies", "movie_id"], movieId)
+                    //     .then(() => res.redirect("/"))
+                    //     .catch((e) => res.send(`Delete from category error: ${e}`));
+                    // })
                     .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
