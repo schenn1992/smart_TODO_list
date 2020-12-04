@@ -192,6 +192,11 @@ module.exports = (db) => {
 
   //edit specific movie
   router.post("/movies/:id", (req, res) => {
+
+    const {id, name, category} = req.body;
+
+    // deleteMovieFromDb(id);
+
     //req params gets id from link
     const search = req.body.name;
     console.log(req.params);
@@ -352,9 +357,6 @@ module.exports = (db) => {
         });
       break;
     }
-
-    // return res.redirect("/");
-    // res.send(`You want to edit the movie ${req.params.id}, the input is`);
   });
 
   //edit specific restaurant
@@ -516,20 +518,13 @@ module.exports = (db) => {
         });
       break;
     }
-
-    // return res.redirect("/");
-    // const restId = req.body.id;
-    // res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
-
   });
 
-  //edit specific book
   router.post("/books/:id", (req, res) => {
     const search = req.body.name;
     const categoryChange = req.body.category.toLowerCase();
     const userId = req.session.user_id;
     const templateVars = { user: userId };
-
     switch (categoryChange) {
     case ("movies"):
       // search for the movie through an api
@@ -576,7 +571,6 @@ module.exports = (db) => {
           const author = "Author";
           const synopsis = "API does not provide a synopsis.";
           const data = { title, author, rating, synopsis };
-
           if (data) {
           // adds search to book database
             addToBookDatabase(data)
@@ -624,7 +618,6 @@ module.exports = (db) => {
                     country: '',
                     province: ''
                   };
-
                   if (data) {
                   // add user's search to database
                     addToRestaurantDatabase(data)
@@ -644,7 +637,6 @@ module.exports = (db) => {
                   } else {
                     return res.status(400).send("Cannot add item, try a different search!");
                   }
-
                 });
             });
         });
@@ -682,9 +674,6 @@ module.exports = (db) => {
         });
       break;
     }
-
-    // return res.redirect("/");
-    // res.send(`You want to edit the book ${req.params.id} `);
   });
 
   //edit specific product
@@ -846,34 +835,90 @@ module.exports = (db) => {
         });
       break;
     }
-
-    // return res.redirect("/");
-    // res.send(`You want to edit the product ${req.params.id} `);
   });
 
+  const selectItemToDelete = function(tableName) {
+    return `DELETE FROM ${tableName}
+      WHERE id = $1`
+  }
 
-  //delete specific movie (doesn't work)
-  router.delete("movies/:id", (req, res) => {
+  const deleteMovieFromDb = function(id) {
+    const queryString = selectItemToDelete('movies');
+    const values = [id];
+    console.log(queryString);
+
+    return db.query(queryString, values)
+      .then(res => { console.log('res=', res);
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+  const deleteRestaurantFromDb = function(id) {
+    const queryString = selectItemToDelete('restaurants');
+    const values = [id];
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+  const deleteBookFromDb = function(id) {
+    const queryString = selectItemToDelete('books');
+    const values = [id];
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+  const deleteProductFromDb = function(id) {
+    const queryString = selectItemToDelete('products');
+    const values = [id];
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+  }
+
+
+  router.delete("/movies/:id", (req, res) => {
+
+    deleteMovieFromDb(req.params.id);
+
     res.send(`You want to delete the movie ${req.params.id} `);
+    res.redirect("/");
+  });
+
+  router.delete("/restaurants/:id", (req, res) => {
+
+    deleteRestaurantFromDb(req.params.id);
+
+    res.send(`You want to delete the restaurant ${req.params.id} `);
+    res.redirect("/");
+  });
+
+  router.delete("/books/:id", (req, res) => {
+
+    deleteBookFromDb(req.params.id);
+
+    res.send(`You want to delete the book ${req.params.id} `);
+    res.redirect("/");
   });
 
 
+  router.delete("/products/:id", (req, res) => {
 
+    deleteProductFromDb(req.params.id);
 
-  // // Gets specific item page
-  // router.get("/:id", (req, res) => {
-  //   res.send("Get Specific Item Page OK!");
-  // });
-
-  // // Gets specific edit item page
-  // router.get("/:id/edit", (req, res) => {
-  //   res.send("Get Edit Page for Specific Item OK!");
-  // });
-
-  // // Updates specific item after editing
-  // router.post("/:id/edit", (req, res) => {
-  //   res.send("Update Item OK!");
-  // });
+    res.send(`You want to delete the product ${req.params.id} `);
+    res.redirect("/");
+  });
 
   return router;
 };
