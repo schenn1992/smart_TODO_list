@@ -1,34 +1,74 @@
-div.profile-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.grey-background {
+  background-color: #EAE7DC;
+  font-family: 'Questrial', sans-serif;
 
-  div.card {
-    width: 50%;
-    margin-top: 2em;
-  }
+  div.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #E85A4F;
+    border-radius: 4px;
+    width: 55%;
+    margin: 2em auto;
 
-  div.user-inputs {
-    margin-top: 2em;
+    div.card {
+      width: 50%;
+      margin-top: 3em;
+    }
 
-    .form-group {
-      width: 30em;
+    div.user-inputs {
+      margin: 5em 0;
+
+      div.form-group {
+        border-radius: 4px;
+        border: 2px solid #E98074;
+        input {
+          background-color: transparent;
+
+        }
+      }
+
+    }
+
+    div.buttons {
+      margin-top: 1em;
+      display: flex;
+      justify-content: space-between;
+
+
+      .btn-submit {
+        background-color: #E98074;
+        color: white;
+        border: 2px solid #E98074;
+        border-radius: 4px;
+        padding: 0.5em;
+
+      }
+
+      .btn-submit:hover {
+        background-color: transparent;
+        color: black;
+
+      }
+
+      .btn-cancel {
+        background-color: transparent;
+        color: black;
+        border: 2px solid #E98074;
+        border-radius: 4px;
+
+      }
+
+      .btn-cancel:hover {
+        background-color: #E98074;
+        color: white;
+      }
     }
   }
 
-  div.buttons {
-    margin-top: 1em;
-
-    .btn:first-child {
-      margin-right: 5em;
-    }
-
-    .btn:last-child {
-      margin-left: 5em;
-    }
-  }
 }
+
 
 
 

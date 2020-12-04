@@ -109,11 +109,15 @@ module.exports = (db) => {
             };
 
             db
-              .query(query)
-              .then(result => result.rows[0])
-              .catch(err => console.error('query error', err.stack));
-
-            res.redirect(`/users/${id}`);
+              .query(query, values)
+              .then(result => {
+                console.log("result.row: ", result.rows[0])
+              })
+              .catch(err => {
+                console.error('query error', err.stack)
+              });
+            req.session.user_id = user.id;
+            return res.redirect(`/users/${user.id}`);
           }
         })
         .catch(e => res.send(e));

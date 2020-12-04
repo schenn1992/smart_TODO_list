@@ -1,15 +1,13 @@
-<!-- <head>
-
-</head> -->
 <header>
     <nav class="navbar navbar-expand-lg navbar-light">
-      <a class="navbar-brand" href="/">uPick</a>
+      <a class="navbar-brand" href="/"><strong>uPickuPicku</strong>
+        </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <div class="btn-group dropright">
+          <button class="btn btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Categories
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -27,11 +25,11 @@
             </li>
           </ul>
           <li class="nav-item">
-            <a class="nav-link" href="">Logged In As: <%= user.email %></a>
+            <a class="nav-link" href="">Logged in as: <%= user.email %></a>
           </li>
           <li class="nav-item">
             <form action="/logout" method="POST">
-              <input type="submit" name="submit" value="Logout">
+              <input type="submit" name="submit" value="Logout" id="btn-logout">
             </form>
           </li>
         </ul>
