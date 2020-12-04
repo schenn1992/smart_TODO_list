@@ -40,7 +40,7 @@ $(document).ready(() => {
 
   //below: posts to specific items in categories with content coming from modals
   $('#moviesModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
     const userInput = getUserInput('#moviesModal');
 
@@ -53,7 +53,7 @@ $(document).ready(() => {
   })
 
   $('#restaurantsModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
     const userInput = getUserInput('#restaurantsModal');
 
@@ -65,7 +65,7 @@ $(document).ready(() => {
   })
 
   $('#booksModal').submit(function(event) {
-    event.preventDefault();
+    // event.preventDefault();
 
     const userInput = getUserInput('#booksModal');
 
@@ -76,7 +76,7 @@ $(document).ready(() => {
   })
 
     $('#productsModal').submit(function(event) {
-      event.preventDefault();
+      // event.preventDefault();
 
       const userInput = getUserInput('#productsModal');
 

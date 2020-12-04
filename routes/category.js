@@ -98,40 +98,92 @@ module.exports = (db) => {
 
   });
 
+    //this goes into the server console log
+    //this is what the server receives from the browser({userInput})
+    //req params gets id from link
+    // console.log(req.body);
+
+    const selectItemToDelete = function(tableName) {
+      return `DELETE FROM ${tableName}
+              WHERE id = $1`
+    }
   //edit specific movie
   router.post("/movies/:id", (req, res) => {
-    //req params gets id from link
-    res.send(`You want to edit the movie ${req.params.id}, the input is`);
+
+    const {id, name, category} = req.body;
+
+    const queryString = selectItemToDelete('movies');
+    const values = [id];
+
+    res.send(`Deleting movie ${id} from movies table`);
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
+
   })
 
   //edit specific restaurant
   router.post("/restaurants/:id", (req, res) => {
-    //this goes into the server console log
-    //this is what the server receives from the browser({userInput})
-    console.log(req.body);
-    const restId = req.body.id;
-    res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
+
+    const {id, name, category} = req.body;
+
+    const queryString = selectItemToDelete('restaurants');
+    const values = [id];
+
+    res.send(`Deleting restaurant ${id} from restaurant table`);
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
 
   })
 
   //edit specific book
   router.post("/books/:id", (req, res) => {
-    res.send(`You want to edit the book ${req.params.id} `);
+
+    const {id, name, category} = req.body;
+
+    const queryString = selectItemToDelete('books');
+    const values = [id];
+
+    res.send(`Deleting book ${id} from books table`);
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
   })
 
   //edit specific product
   router.post("/products/:id", (req, res) => {
-    res.send(`You want to edit the product ${req.params.id} `);
+
+    const {id, name, category} = req.body;
+
+    const queryString = selectItemToDelete('products');
+    const values = [id];
+
+    res.send(`Deleting product ${id} from products table`);
+
+    return db.query(queryString, values)
+      .then(res => {
+        return res.rows;
+      })
+      .catch(e => res.send(e));
   })
 
 
-  //delete specific movie (doesn't work)
-  router.delete("movies/:id", (req, res) => {
-    res.send(`You want to delete the movie ${req.params.id} `);
-  });
 
 
-
+  // //delete specific movie (doesn't work)
+  // router.delete("movies/:id", (req, res) => {
+  //   res.send(`You want to delete the movie ${req.params.id} `);
+  // });
 
   // // Gets specific item page
   // router.get("/:id", (req, res) => {
