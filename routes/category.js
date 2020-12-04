@@ -205,14 +205,11 @@ module.exports = (db) => {
               // Gets the table length to use as the new movies_id
                 getCategoryLength("movies")
                   .then(count => {
-                    console.log("test");
                     const movieId = Number(count);
-                    console.log("movie id: ", movieId);
-                    console.log("user id: ", userId);
                     // Adds the users.id and movies.id to the many to many table
                     addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
-                      .then(() => res.send("ok"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    .then(() => res.redirect("/"))
+                    .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -243,9 +240,9 @@ module.exports = (db) => {
                   .then(count => {
                     const bookId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId)
+                    .then(() => res.redirect("/"))
+                    .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -291,9 +288,9 @@ module.exports = (db) => {
                           .then(count => {
                             const restaurantId = Number(count);
                             // Adds the users.id and restaurant.id to the many to many table
-                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId);
-                            // .then(() => alert("Change made!"));
-                            // .catch(e => res.send(`Many to many table error`));
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
                           })
                           .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
                       })
@@ -326,9 +323,9 @@ module.exports = (db) => {
                   .then(count => {
                     const productId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -340,8 +337,8 @@ module.exports = (db) => {
       break;
     }
 
-    return res.render("index", templateVars);
-    res.send(`You want to edit the movie ${req.params.id}, the input is`);
+    // return res.redirect("/");
+    // res.send(`You want to edit the movie ${req.params.id}, the input is`);
   });
 
   //edit specific restaurant
@@ -374,9 +371,9 @@ module.exports = (db) => {
                     console.log("movie id: ", movieId);
                     console.log("user id: ", userId);
                     // Adds the users.id and movies.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -407,9 +404,9 @@ module.exports = (db) => {
                   .then(count => {
                     const bookId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -455,9 +452,9 @@ module.exports = (db) => {
                           .then(count => {
                             const restaurantId = Number(count);
                             // Adds the users.id and restaurant.id to the many to many table
-                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId);
-                            // .then(() => alert("Change made!"));
-                            // .catch(e => res.send(`Many to many table error`));
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
                           })
                           .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
                       })
@@ -490,9 +487,9 @@ module.exports = (db) => {
                   .then(count => {
                     const productId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -504,9 +501,9 @@ module.exports = (db) => {
       break;
     }
 
-    return res.render("index", templateVars);
-    const restId = req.body.id;
-    res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
+    // return res.redirect("/");
+    // const restId = req.body.id;
+    // res.send(`You want to edit the restaurant ${req.params.id} (according to URL, ${restId} according to db)`);
 
   });
 
@@ -540,9 +537,9 @@ module.exports = (db) => {
                     console.log("movie id: ", movieId);
                     console.log("user id: ", userId);
                     // Adds the users.id and movies.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -573,9 +570,9 @@ module.exports = (db) => {
                   .then(count => {
                     const bookId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -621,9 +618,9 @@ module.exports = (db) => {
                           .then(count => {
                             const restaurantId = Number(count);
                             // Adds the users.id and restaurant.id to the many to many table
-                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId);
-                            // .then(() => alert("Change made!"));
-                            // .catch(e => res.send(`Many to many table error`));
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
                           })
                           .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
                       })
@@ -656,9 +653,9 @@ module.exports = (db) => {
                   .then(count => {
                     const productId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -670,8 +667,8 @@ module.exports = (db) => {
       break;
     }
 
-    return res.render("index", templateVars);
-    res.send(`You want to edit the book ${req.params.id} `);
+    // return res.redirect("/");
+    // res.send(`You want to edit the book ${req.params.id} `);
   });
 
   //edit specific product
@@ -704,9 +701,9 @@ module.exports = (db) => {
                     console.log("movie id: ", movieId);
                     console.log("user id: ", userId);
                     // Adds the users.id and movies.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["movies", "movie_id"], userId, movieId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -737,9 +734,9 @@ module.exports = (db) => {
                   .then(count => {
                     const bookId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["books", "book_id"], userId, bookId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -785,9 +782,9 @@ module.exports = (db) => {
                           .then(count => {
                             const restaurantId = Number(count);
                             // Adds the users.id and restaurant.id to the many to many table
-                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId);
-                            // .then(() => alert("Change made!"));
-                            // .catch(e => res.send(`Many to many table error`));
+                            addToUsersAndCategoriesDatabase(["restaurants", "restaurant_id"], userId, restaurantId)
+                              .then(() => res.redirect("/"))
+                              .catch(e => res.send(`Many to many table error`));
                           })
                           .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
                       })
@@ -820,9 +817,9 @@ module.exports = (db) => {
                   .then(count => {
                     const productId = Number(count);
                     // Adds the users.id and products.id to the many to many table
-                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId);
-                    // .then(() => alert("Change made!"));
-                    // .catch(e => res.send(`Many to many table error`));
+                    addToUsersAndCategoriesDatabase(["products", "product_id"], userId, productId)
+                      .then(() => res.redirect("/"))
+                      .catch(e => res.send(`Many to many table error`));
                   })
                   .catch(e => res.send(`Error in getCategeoryLength: ${e}`));
               })
@@ -834,8 +831,8 @@ module.exports = (db) => {
       break;
     }
 
-    return res.render("index", templateVars);
-    res.send(`You want to edit the product ${req.params.id} `);
+    // return res.redirect("/");
+    // res.send(`You want to edit the product ${req.params.id} `);
   });
 
 
