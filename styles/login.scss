@@ -1,13 +1,14 @@
 .grey-background {
-
   background-color: #EAE7DC;
+
   .login-background {
+
     .main-login {
       font-family: 'Questrial', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
-      border: 1px solid #E98074;
+      border: 1px solid #E85A4F;
       border-radius: 2px;
       margin: 5em auto;
       color: #8E8D8A;
@@ -26,6 +27,12 @@
           display: flex;
           flex-direction: column;
 
+          input {
+            background-color: transparent;
+            border-style: hidden;
+            border-bottom: 2px solid #E98074;
+          }
+
           .login-submit{
             margin-top: 15px;
             background-color: transparent;
@@ -41,10 +48,8 @@
           }
         }
       }
-
       h4 {
-        margin-top: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 1em;
 
         a {
           color:#E85A4F;
